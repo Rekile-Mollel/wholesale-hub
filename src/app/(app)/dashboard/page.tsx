@@ -26,7 +26,7 @@ const metrics = [
 
 export default function DashboardPage() {
   return (
-    <main className="min-h-screen bg-slate-50 px-4 py-6 sm:px-6 lg:px-8">
+    <div className="px-4 py-6 sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-6xl flex-col gap-6">
         <div>
           <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
@@ -52,6 +52,6 @@ export default function DashboardPage() {
           ))}
         </section>
       </div>
-    </main>
+    </div>
   );
 }
