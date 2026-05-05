@@ -13,30 +13,41 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900">
-      <aside className="fixed inset-y-0 left-0 hidden w-64 flex-col bg-slate-950 px-6 py-6 text-white lg:flex">
-        <div>
-          <Link href="/dashboard" className="block">
-            <p className="text-xl font-bold">Wholesale Hub</p>
-            <p className="mt-1 text-sm text-slate-400">Inventory System</p>
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <aside className="fixed inset-y-0 left-0 hidden w-[260px] flex-col border-r border-white/10 bg-slate-950 px-5 py-6 text-white lg:flex">
+        <div className="border-b border-white/10 pb-6">
+          <Link href="/dashboard" className="block rounded-md px-2 py-1">
+            <p className="text-xl font-bold tracking-tight">Wholesale Hub</p>
+            <p className="mt-1 text-sm font-medium text-slate-400">
+              Inventory System
+            </p>
           </Link>
         </div>
 
-        <nav className="mt-10 flex flex-col gap-2">
+        <nav className="mt-8 flex flex-col gap-1.5">
           {navigation.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white hover:shadow-sm"
             >
               {item.name}
             </Link>
           ))}
         </nav>
+
+        <div className="mt-auto rounded-lg border border-white/10 bg-white/5 p-4">
+          <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+            Store Mode
+          </p>
+          <p className="mt-2 text-sm font-medium text-slate-100">
+            Ready for inventory setup
+          </p>
+        </div>
       </aside>
 
-      <div className="lg:pl-64">
-        <header className="sticky top-0 z-10 border-b border-slate-200 bg-white px-4 py-4 sm:px-6 lg:px-8">
+      <div className="lg:pl-[260px]">
+        <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/95 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
           <div className="mx-auto flex max-w-6xl flex-col gap-4 lg:max-w-none">
             <div className="flex items-center justify-between gap-4 lg:hidden">
               <Link href="/dashboard">
@@ -53,7 +64,7 @@ export default function AppLayout({
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="whitespace-nowrap rounded-md bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700"
+                  className="whitespace-nowrap rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200 hover:text-slate-950"
                 >
                   {item.name}
                 </Link>
@@ -64,16 +75,18 @@ export default function AppLayout({
               <input
                 type="search"
                 placeholder="Search products, sales, receipts..."
-                className="h-10 min-w-0 flex-1 rounded-md border border-slate-200 bg-slate-50 px-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:bg-white"
+                className="h-11 min-w-0 flex-1 rounded-lg border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:bg-white focus:ring-4 focus:ring-slate-100"
               />
-              <p className="hidden text-sm font-medium text-slate-700 lg:block">
+              <p className="hidden rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 lg:block">
                 Admin
               </p>
             </div>
           </div>
         </header>
 
-        <main className="min-h-[calc(100vh-73px)] bg-slate-50">{children}</main>
+        <main className="min-h-[calc(100vh-77px)] bg-slate-50">
+          {children}
+        </main>
       </div>
     </div>
   );
