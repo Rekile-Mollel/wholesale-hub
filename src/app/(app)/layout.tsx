@@ -1,4 +1,14 @@
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
@@ -48,7 +58,7 @@ export default function AppLayout({
 
       <div className="lg:pl-[260px]">
         <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/95 px-4 py-4 backdrop-blur sm:px-6 lg:px-8">
-          <div className="mx-auto flex max-w-6xl flex-col gap-4 lg:max-w-none">
+          <div className="mx-auto flex max-w-6xl flex-col gap-3 lg:max-w-none">
             <div className="flex items-center justify-between gap-4 lg:hidden">
               <Link href="/dashboard">
                 <p className="text-lg font-bold text-slate-950">
@@ -56,26 +66,48 @@ export default function AppLayout({
                 </p>
                 <p className="text-xs text-slate-500">Inventory System</p>
               </Link>
-              <p className="text-sm font-medium text-slate-700">Admin</p>
-            </div>
 
-            <nav className="flex gap-2 overflow-x-auto lg:hidden">
-              {navigation.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="whitespace-nowrap rounded-lg bg-slate-100 px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-200 hover:text-slate-950"
-                >
-                  {item.name}
-                </Link>
-              ))}
-            </nav>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="rounded-lg px-4"
+                  >
+                    Menu
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-72 bg-slate-950 text-white">
+                  <SheetHeader className="border-b border-white/10 p-6">
+                    <SheetTitle className="text-left text-lg text-white">
+                      Wholesale Hub
+                    </SheetTitle>
+                    <SheetDescription className="text-left text-slate-400">
+                      Inventory System
+                    </SheetDescription>
+                  </SheetHeader>
+
+                  <nav className="flex flex-col gap-2 p-6">
+                    {navigation.map((item) => (
+                      <SheetClose asChild key={item.href}>
+                        <Link
+                          href={item.href}
+                          className="rounded-lg px-3 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/10 hover:text-white"
+                        >
+                          {item.name}
+                        </Link>
+                      </SheetClose>
+                    ))}
+                  </nav>
+                </SheetContent>
+              </Sheet>
+            </div>
 
             <div className="flex items-center gap-4">
               <input
                 type="search"
                 placeholder="Search products, sales, receipts..."
-                className="h-11 min-w-0 flex-1 rounded-lg border border-slate-200 bg-slate-50 px-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:bg-white focus:ring-4 focus:ring-slate-100"
+                className="h-10 min-w-0 flex-1 rounded-lg border border-slate-200 bg-slate-50 px-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-slate-400 focus:bg-white focus:ring-4 focus:ring-slate-100 sm:h-11 sm:px-4"
               />
               <p className="hidden rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 lg:block">
                 Admin
