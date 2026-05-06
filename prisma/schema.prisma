@@ -32,6 +32,7 @@ model Sale {
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   items         SaleItem[]
+  receipt       Receipt?
 }
 
 model SaleItem {
@@ -45,4 +46,18 @@ model SaleItem {
   unitPrice   Int
   lineTotal   Int
   createdAt   DateTime @default(now())
+}
+
+model Receipt {
+  id            String   @id @default(cuid())
+  receiptNumber String   @unique
+  saleId        String   @unique
+  sale          Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  customerName  String
+  paymentMethod String
+  subtotal      Int
+  discount      Int      @default(0)
+  total         Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

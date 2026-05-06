@@ -28,6 +28,11 @@ export type Sale = $Result.DefaultSelection<Prisma.$SalePayload>
  * 
  */
 export type SaleItem = $Result.DefaultSelection<Prisma.$SaleItemPayload>
+/**
+ * Model Receipt
+ * 
+ */
+export type Receipt = $Result.DefaultSelection<Prisma.$ReceiptPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -176,6 +181,16 @@ export class PrismaClient<
     * ```
     */
   get saleItem(): Prisma.SaleItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.receipt`: Exposes CRUD operations for the **Receipt** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Receipts
+    * const receipts = await prisma.receipt.findMany()
+    * ```
+    */
+  get receipt(): Prisma.ReceiptDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -619,7 +634,8 @@ export namespace Prisma {
   export const ModelName: {
     Product: 'Product',
     Sale: 'Sale',
-    SaleItem: 'SaleItem'
+    SaleItem: 'SaleItem',
+    Receipt: 'Receipt'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -638,7 +654,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "product" | "sale" | "saleItem"
+      modelProps: "product" | "sale" | "saleItem" | "receipt"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -864,6 +880,80 @@ export namespace Prisma {
           }
         }
       }
+      Receipt: {
+        payload: Prisma.$ReceiptPayload<ExtArgs>
+        fields: Prisma.ReceiptFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReceiptFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReceiptFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload>
+          }
+          findFirst: {
+            args: Prisma.ReceiptFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReceiptFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload>
+          }
+          findMany: {
+            args: Prisma.ReceiptFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload>[]
+          }
+          create: {
+            args: Prisma.ReceiptCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload>
+          }
+          createMany: {
+            args: Prisma.ReceiptCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReceiptCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload>[]
+          }
+          delete: {
+            args: Prisma.ReceiptDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload>
+          }
+          update: {
+            args: Prisma.ReceiptUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReceiptDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReceiptUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ReceiptUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload>[]
+          }
+          upsert: {
+            args: Prisma.ReceiptUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReceiptPayload>
+          }
+          aggregate: {
+            args: Prisma.ReceiptAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReceipt>
+          }
+          groupBy: {
+            args: Prisma.ReceiptGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReceiptGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReceiptCountArgs<ExtArgs>
+            result: $Utils.Optional<ReceiptCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -963,6 +1053,7 @@ export namespace Prisma {
     product?: ProductOmit
     sale?: SaleOmit
     saleItem?: SaleItemOmit
+    receipt?: ReceiptOmit
   }
 
   /* Types for Logging */
@@ -2509,6 +2600,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     items?: boolean | Sale$itemsArgs<ExtArgs>
+    receipt?: boolean | Sale$receiptArgs<ExtArgs>
     _count?: boolean | SaleCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["sale"]>
 
@@ -2551,6 +2643,7 @@ export namespace Prisma {
   export type SaleOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerName" | "paymentMethod" | "subtotal" | "discount" | "total" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["sale"]>
   export type SaleInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     items?: boolean | Sale$itemsArgs<ExtArgs>
+    receipt?: boolean | Sale$receiptArgs<ExtArgs>
     _count?: boolean | SaleCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type SaleIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2560,6 +2653,7 @@ export namespace Prisma {
     name: "Sale"
     objects: {
       items: Prisma.$SaleItemPayload<ExtArgs>[]
+      receipt: Prisma.$ReceiptPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -2966,6 +3060,7 @@ export namespace Prisma {
   export interface Prisma__SaleClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     items<T extends Sale$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Sale$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SaleItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    receipt<T extends Sale$receiptArgs<ExtArgs> = {}>(args?: Subset<T, Sale$receiptArgs<ExtArgs>>): Prisma__ReceiptClient<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3411,6 +3506,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SaleItemScalarFieldEnum | SaleItemScalarFieldEnum[]
+  }
+
+  /**
+   * Sale.receipt
+   */
+  export type Sale$receiptArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    where?: ReceiptWhereInput
   }
 
   /**
@@ -4578,6 +4692,1169 @@ export namespace Prisma {
 
 
   /**
+   * Model Receipt
+   */
+
+  export type AggregateReceipt = {
+    _count: ReceiptCountAggregateOutputType | null
+    _avg: ReceiptAvgAggregateOutputType | null
+    _sum: ReceiptSumAggregateOutputType | null
+    _min: ReceiptMinAggregateOutputType | null
+    _max: ReceiptMaxAggregateOutputType | null
+  }
+
+  export type ReceiptAvgAggregateOutputType = {
+    subtotal: number | null
+    discount: number | null
+    total: number | null
+  }
+
+  export type ReceiptSumAggregateOutputType = {
+    subtotal: number | null
+    discount: number | null
+    total: number | null
+  }
+
+  export type ReceiptMinAggregateOutputType = {
+    id: string | null
+    receiptNumber: string | null
+    saleId: string | null
+    customerName: string | null
+    paymentMethod: string | null
+    subtotal: number | null
+    discount: number | null
+    total: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ReceiptMaxAggregateOutputType = {
+    id: string | null
+    receiptNumber: string | null
+    saleId: string | null
+    customerName: string | null
+    paymentMethod: string | null
+    subtotal: number | null
+    discount: number | null
+    total: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ReceiptCountAggregateOutputType = {
+    id: number
+    receiptNumber: number
+    saleId: number
+    customerName: number
+    paymentMethod: number
+    subtotal: number
+    discount: number
+    total: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ReceiptAvgAggregateInputType = {
+    subtotal?: true
+    discount?: true
+    total?: true
+  }
+
+  export type ReceiptSumAggregateInputType = {
+    subtotal?: true
+    discount?: true
+    total?: true
+  }
+
+  export type ReceiptMinAggregateInputType = {
+    id?: true
+    receiptNumber?: true
+    saleId?: true
+    customerName?: true
+    paymentMethod?: true
+    subtotal?: true
+    discount?: true
+    total?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ReceiptMaxAggregateInputType = {
+    id?: true
+    receiptNumber?: true
+    saleId?: true
+    customerName?: true
+    paymentMethod?: true
+    subtotal?: true
+    discount?: true
+    total?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ReceiptCountAggregateInputType = {
+    id?: true
+    receiptNumber?: true
+    saleId?: true
+    customerName?: true
+    paymentMethod?: true
+    subtotal?: true
+    discount?: true
+    total?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ReceiptAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Receipt to aggregate.
+     */
+    where?: ReceiptWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Receipts to fetch.
+     */
+    orderBy?: ReceiptOrderByWithRelationInput | ReceiptOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReceiptWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Receipts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Receipts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Receipts
+    **/
+    _count?: true | ReceiptCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ReceiptAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ReceiptSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReceiptMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReceiptMaxAggregateInputType
+  }
+
+  export type GetReceiptAggregateType<T extends ReceiptAggregateArgs> = {
+        [P in keyof T & keyof AggregateReceipt]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReceipt[P]>
+      : GetScalarType<T[P], AggregateReceipt[P]>
+  }
+
+
+
+
+  export type ReceiptGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReceiptWhereInput
+    orderBy?: ReceiptOrderByWithAggregationInput | ReceiptOrderByWithAggregationInput[]
+    by: ReceiptScalarFieldEnum[] | ReceiptScalarFieldEnum
+    having?: ReceiptScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReceiptCountAggregateInputType | true
+    _avg?: ReceiptAvgAggregateInputType
+    _sum?: ReceiptSumAggregateInputType
+    _min?: ReceiptMinAggregateInputType
+    _max?: ReceiptMaxAggregateInputType
+  }
+
+  export type ReceiptGroupByOutputType = {
+    id: string
+    receiptNumber: string
+    saleId: string
+    customerName: string
+    paymentMethod: string
+    subtotal: number
+    discount: number
+    total: number
+    createdAt: Date
+    updatedAt: Date
+    _count: ReceiptCountAggregateOutputType | null
+    _avg: ReceiptAvgAggregateOutputType | null
+    _sum: ReceiptSumAggregateOutputType | null
+    _min: ReceiptMinAggregateOutputType | null
+    _max: ReceiptMaxAggregateOutputType | null
+  }
+
+  type GetReceiptGroupByPayload<T extends ReceiptGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReceiptGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReceiptGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReceiptGroupByOutputType[P]>
+            : GetScalarType<T[P], ReceiptGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReceiptSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    receiptNumber?: boolean
+    saleId?: boolean
+    customerName?: boolean
+    paymentMethod?: boolean
+    subtotal?: boolean
+    discount?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sale?: boolean | SaleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["receipt"]>
+
+  export type ReceiptSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    receiptNumber?: boolean
+    saleId?: boolean
+    customerName?: boolean
+    paymentMethod?: boolean
+    subtotal?: boolean
+    discount?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sale?: boolean | SaleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["receipt"]>
+
+  export type ReceiptSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    receiptNumber?: boolean
+    saleId?: boolean
+    customerName?: boolean
+    paymentMethod?: boolean
+    subtotal?: boolean
+    discount?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    sale?: boolean | SaleDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["receipt"]>
+
+  export type ReceiptSelectScalar = {
+    id?: boolean
+    receiptNumber?: boolean
+    saleId?: boolean
+    customerName?: boolean
+    paymentMethod?: boolean
+    subtotal?: boolean
+    discount?: boolean
+    total?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ReceiptOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "receiptNumber" | "saleId" | "customerName" | "paymentMethod" | "subtotal" | "discount" | "total" | "createdAt" | "updatedAt", ExtArgs["result"]["receipt"]>
+  export type ReceiptInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sale?: boolean | SaleDefaultArgs<ExtArgs>
+  }
+  export type ReceiptIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sale?: boolean | SaleDefaultArgs<ExtArgs>
+  }
+  export type ReceiptIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    sale?: boolean | SaleDefaultArgs<ExtArgs>
+  }
+
+  export type $ReceiptPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Receipt"
+    objects: {
+      sale: Prisma.$SalePayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      receiptNumber: string
+      saleId: string
+      customerName: string
+      paymentMethod: string
+      subtotal: number
+      discount: number
+      total: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["receipt"]>
+    composites: {}
+  }
+
+  type ReceiptGetPayload<S extends boolean | null | undefined | ReceiptDefaultArgs> = $Result.GetResult<Prisma.$ReceiptPayload, S>
+
+  type ReceiptCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReceiptFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReceiptCountAggregateInputType | true
+    }
+
+  export interface ReceiptDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Receipt'], meta: { name: 'Receipt' } }
+    /**
+     * Find zero or one Receipt that matches the filter.
+     * @param {ReceiptFindUniqueArgs} args - Arguments to find a Receipt
+     * @example
+     * // Get one Receipt
+     * const receipt = await prisma.receipt.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReceiptFindUniqueArgs>(args: SelectSubset<T, ReceiptFindUniqueArgs<ExtArgs>>): Prisma__ReceiptClient<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Receipt that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ReceiptFindUniqueOrThrowArgs} args - Arguments to find a Receipt
+     * @example
+     * // Get one Receipt
+     * const receipt = await prisma.receipt.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReceiptFindUniqueOrThrowArgs>(args: SelectSubset<T, ReceiptFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReceiptClient<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Receipt that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceiptFindFirstArgs} args - Arguments to find a Receipt
+     * @example
+     * // Get one Receipt
+     * const receipt = await prisma.receipt.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReceiptFindFirstArgs>(args?: SelectSubset<T, ReceiptFindFirstArgs<ExtArgs>>): Prisma__ReceiptClient<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Receipt that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceiptFindFirstOrThrowArgs} args - Arguments to find a Receipt
+     * @example
+     * // Get one Receipt
+     * const receipt = await prisma.receipt.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReceiptFindFirstOrThrowArgs>(args?: SelectSubset<T, ReceiptFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReceiptClient<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Receipts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceiptFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Receipts
+     * const receipts = await prisma.receipt.findMany()
+     * 
+     * // Get first 10 Receipts
+     * const receipts = await prisma.receipt.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const receiptWithIdOnly = await prisma.receipt.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ReceiptFindManyArgs>(args?: SelectSubset<T, ReceiptFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Receipt.
+     * @param {ReceiptCreateArgs} args - Arguments to create a Receipt.
+     * @example
+     * // Create one Receipt
+     * const Receipt = await prisma.receipt.create({
+     *   data: {
+     *     // ... data to create a Receipt
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReceiptCreateArgs>(args: SelectSubset<T, ReceiptCreateArgs<ExtArgs>>): Prisma__ReceiptClient<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Receipts.
+     * @param {ReceiptCreateManyArgs} args - Arguments to create many Receipts.
+     * @example
+     * // Create many Receipts
+     * const receipt = await prisma.receipt.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReceiptCreateManyArgs>(args?: SelectSubset<T, ReceiptCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Receipts and returns the data saved in the database.
+     * @param {ReceiptCreateManyAndReturnArgs} args - Arguments to create many Receipts.
+     * @example
+     * // Create many Receipts
+     * const receipt = await prisma.receipt.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Receipts and only return the `id`
+     * const receiptWithIdOnly = await prisma.receipt.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReceiptCreateManyAndReturnArgs>(args?: SelectSubset<T, ReceiptCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Receipt.
+     * @param {ReceiptDeleteArgs} args - Arguments to delete one Receipt.
+     * @example
+     * // Delete one Receipt
+     * const Receipt = await prisma.receipt.delete({
+     *   where: {
+     *     // ... filter to delete one Receipt
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReceiptDeleteArgs>(args: SelectSubset<T, ReceiptDeleteArgs<ExtArgs>>): Prisma__ReceiptClient<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Receipt.
+     * @param {ReceiptUpdateArgs} args - Arguments to update one Receipt.
+     * @example
+     * // Update one Receipt
+     * const receipt = await prisma.receipt.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReceiptUpdateArgs>(args: SelectSubset<T, ReceiptUpdateArgs<ExtArgs>>): Prisma__ReceiptClient<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Receipts.
+     * @param {ReceiptDeleteManyArgs} args - Arguments to filter Receipts to delete.
+     * @example
+     * // Delete a few Receipts
+     * const { count } = await prisma.receipt.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReceiptDeleteManyArgs>(args?: SelectSubset<T, ReceiptDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Receipts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceiptUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Receipts
+     * const receipt = await prisma.receipt.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReceiptUpdateManyArgs>(args: SelectSubset<T, ReceiptUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Receipts and returns the data updated in the database.
+     * @param {ReceiptUpdateManyAndReturnArgs} args - Arguments to update many Receipts.
+     * @example
+     * // Update many Receipts
+     * const receipt = await prisma.receipt.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Receipts and only return the `id`
+     * const receiptWithIdOnly = await prisma.receipt.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ReceiptUpdateManyAndReturnArgs>(args: SelectSubset<T, ReceiptUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Receipt.
+     * @param {ReceiptUpsertArgs} args - Arguments to update or create a Receipt.
+     * @example
+     * // Update or create a Receipt
+     * const receipt = await prisma.receipt.upsert({
+     *   create: {
+     *     // ... data to create a Receipt
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Receipt we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReceiptUpsertArgs>(args: SelectSubset<T, ReceiptUpsertArgs<ExtArgs>>): Prisma__ReceiptClient<$Result.GetResult<Prisma.$ReceiptPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Receipts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceiptCountArgs} args - Arguments to filter Receipts to count.
+     * @example
+     * // Count the number of Receipts
+     * const count = await prisma.receipt.count({
+     *   where: {
+     *     // ... the filter for the Receipts we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReceiptCountArgs>(
+      args?: Subset<T, ReceiptCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReceiptCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Receipt.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceiptAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReceiptAggregateArgs>(args: Subset<T, ReceiptAggregateArgs>): Prisma.PrismaPromise<GetReceiptAggregateType<T>>
+
+    /**
+     * Group by Receipt.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReceiptGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReceiptGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReceiptGroupByArgs['orderBy'] }
+        : { orderBy?: ReceiptGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReceiptGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReceiptGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Receipt model
+   */
+  readonly fields: ReceiptFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Receipt.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReceiptClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    sale<T extends SaleDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SaleDefaultArgs<ExtArgs>>): Prisma__SaleClient<$Result.GetResult<Prisma.$SalePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Receipt model
+   */
+  interface ReceiptFieldRefs {
+    readonly id: FieldRef<"Receipt", 'String'>
+    readonly receiptNumber: FieldRef<"Receipt", 'String'>
+    readonly saleId: FieldRef<"Receipt", 'String'>
+    readonly customerName: FieldRef<"Receipt", 'String'>
+    readonly paymentMethod: FieldRef<"Receipt", 'String'>
+    readonly subtotal: FieldRef<"Receipt", 'Int'>
+    readonly discount: FieldRef<"Receipt", 'Int'>
+    readonly total: FieldRef<"Receipt", 'Int'>
+    readonly createdAt: FieldRef<"Receipt", 'DateTime'>
+    readonly updatedAt: FieldRef<"Receipt", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Receipt findUnique
+   */
+  export type ReceiptFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    /**
+     * Filter, which Receipt to fetch.
+     */
+    where: ReceiptWhereUniqueInput
+  }
+
+  /**
+   * Receipt findUniqueOrThrow
+   */
+  export type ReceiptFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    /**
+     * Filter, which Receipt to fetch.
+     */
+    where: ReceiptWhereUniqueInput
+  }
+
+  /**
+   * Receipt findFirst
+   */
+  export type ReceiptFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    /**
+     * Filter, which Receipt to fetch.
+     */
+    where?: ReceiptWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Receipts to fetch.
+     */
+    orderBy?: ReceiptOrderByWithRelationInput | ReceiptOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Receipts.
+     */
+    cursor?: ReceiptWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Receipts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Receipts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Receipts.
+     */
+    distinct?: ReceiptScalarFieldEnum | ReceiptScalarFieldEnum[]
+  }
+
+  /**
+   * Receipt findFirstOrThrow
+   */
+  export type ReceiptFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    /**
+     * Filter, which Receipt to fetch.
+     */
+    where?: ReceiptWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Receipts to fetch.
+     */
+    orderBy?: ReceiptOrderByWithRelationInput | ReceiptOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Receipts.
+     */
+    cursor?: ReceiptWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Receipts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Receipts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Receipts.
+     */
+    distinct?: ReceiptScalarFieldEnum | ReceiptScalarFieldEnum[]
+  }
+
+  /**
+   * Receipt findMany
+   */
+  export type ReceiptFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    /**
+     * Filter, which Receipts to fetch.
+     */
+    where?: ReceiptWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Receipts to fetch.
+     */
+    orderBy?: ReceiptOrderByWithRelationInput | ReceiptOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Receipts.
+     */
+    cursor?: ReceiptWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Receipts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Receipts.
+     */
+    skip?: number
+    distinct?: ReceiptScalarFieldEnum | ReceiptScalarFieldEnum[]
+  }
+
+  /**
+   * Receipt create
+   */
+  export type ReceiptCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Receipt.
+     */
+    data: XOR<ReceiptCreateInput, ReceiptUncheckedCreateInput>
+  }
+
+  /**
+   * Receipt createMany
+   */
+  export type ReceiptCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Receipts.
+     */
+    data: ReceiptCreateManyInput | ReceiptCreateManyInput[]
+  }
+
+  /**
+   * Receipt createManyAndReturn
+   */
+  export type ReceiptCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * The data used to create many Receipts.
+     */
+    data: ReceiptCreateManyInput | ReceiptCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Receipt update
+   */
+  export type ReceiptUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Receipt.
+     */
+    data: XOR<ReceiptUpdateInput, ReceiptUncheckedUpdateInput>
+    /**
+     * Choose, which Receipt to update.
+     */
+    where: ReceiptWhereUniqueInput
+  }
+
+  /**
+   * Receipt updateMany
+   */
+  export type ReceiptUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Receipts.
+     */
+    data: XOR<ReceiptUpdateManyMutationInput, ReceiptUncheckedUpdateManyInput>
+    /**
+     * Filter which Receipts to update
+     */
+    where?: ReceiptWhereInput
+    /**
+     * Limit how many Receipts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Receipt updateManyAndReturn
+   */
+  export type ReceiptUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * The data used to update Receipts.
+     */
+    data: XOR<ReceiptUpdateManyMutationInput, ReceiptUncheckedUpdateManyInput>
+    /**
+     * Filter which Receipts to update
+     */
+    where?: ReceiptWhereInput
+    /**
+     * Limit how many Receipts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Receipt upsert
+   */
+  export type ReceiptUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Receipt to update in case it exists.
+     */
+    where: ReceiptWhereUniqueInput
+    /**
+     * In case the Receipt found by the `where` argument doesn't exist, create a new Receipt with this data.
+     */
+    create: XOR<ReceiptCreateInput, ReceiptUncheckedCreateInput>
+    /**
+     * In case the Receipt was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReceiptUpdateInput, ReceiptUncheckedUpdateInput>
+  }
+
+  /**
+   * Receipt delete
+   */
+  export type ReceiptDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+    /**
+     * Filter which Receipt to delete.
+     */
+    where: ReceiptWhereUniqueInput
+  }
+
+  /**
+   * Receipt deleteMany
+   */
+  export type ReceiptDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Receipts to delete
+     */
+    where?: ReceiptWhereInput
+    /**
+     * Limit how many Receipts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Receipt without action
+   */
+  export type ReceiptDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Receipt
+     */
+    select?: ReceiptSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Receipt
+     */
+    omit?: ReceiptOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReceiptInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -4630,6 +5907,22 @@ export namespace Prisma {
   };
 
   export type SaleItemScalarFieldEnum = (typeof SaleItemScalarFieldEnum)[keyof typeof SaleItemScalarFieldEnum]
+
+
+  export const ReceiptScalarFieldEnum: {
+    id: 'id',
+    receiptNumber: 'receiptNumber',
+    saleId: 'saleId',
+    customerName: 'customerName',
+    paymentMethod: 'paymentMethod',
+    subtotal: 'subtotal',
+    discount: 'discount',
+    total: 'total',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ReceiptScalarFieldEnum = (typeof ReceiptScalarFieldEnum)[keyof typeof ReceiptScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -4775,6 +6068,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Sale"> | Date | string
     updatedAt?: DateTimeFilter<"Sale"> | Date | string
     items?: SaleItemListRelationFilter
+    receipt?: XOR<ReceiptNullableScalarRelationFilter, ReceiptWhereInput> | null
   }
 
   export type SaleOrderByWithRelationInput = {
@@ -4788,6 +6082,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     items?: SaleItemOrderByRelationAggregateInput
+    receipt?: ReceiptOrderByWithRelationInput
   }
 
   export type SaleWhereUniqueInput = Prisma.AtLeast<{
@@ -4804,6 +6099,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Sale"> | Date | string
     updatedAt?: DateTimeFilter<"Sale"> | Date | string
     items?: SaleItemListRelationFilter
+    receipt?: XOR<ReceiptNullableScalarRelationFilter, ReceiptWhereInput> | null
   }, "id">
 
   export type SaleOrderByWithAggregationInput = {
@@ -4913,6 +6209,88 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"SaleItem"> | Date | string
   }
 
+  export type ReceiptWhereInput = {
+    AND?: ReceiptWhereInput | ReceiptWhereInput[]
+    OR?: ReceiptWhereInput[]
+    NOT?: ReceiptWhereInput | ReceiptWhereInput[]
+    id?: StringFilter<"Receipt"> | string
+    receiptNumber?: StringFilter<"Receipt"> | string
+    saleId?: StringFilter<"Receipt"> | string
+    customerName?: StringFilter<"Receipt"> | string
+    paymentMethod?: StringFilter<"Receipt"> | string
+    subtotal?: IntFilter<"Receipt"> | number
+    discount?: IntFilter<"Receipt"> | number
+    total?: IntFilter<"Receipt"> | number
+    createdAt?: DateTimeFilter<"Receipt"> | Date | string
+    updatedAt?: DateTimeFilter<"Receipt"> | Date | string
+    sale?: XOR<SaleScalarRelationFilter, SaleWhereInput>
+  }
+
+  export type ReceiptOrderByWithRelationInput = {
+    id?: SortOrder
+    receiptNumber?: SortOrder
+    saleId?: SortOrder
+    customerName?: SortOrder
+    paymentMethod?: SortOrder
+    subtotal?: SortOrder
+    discount?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    sale?: SaleOrderByWithRelationInput
+  }
+
+  export type ReceiptWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    receiptNumber?: string
+    saleId?: string
+    AND?: ReceiptWhereInput | ReceiptWhereInput[]
+    OR?: ReceiptWhereInput[]
+    NOT?: ReceiptWhereInput | ReceiptWhereInput[]
+    customerName?: StringFilter<"Receipt"> | string
+    paymentMethod?: StringFilter<"Receipt"> | string
+    subtotal?: IntFilter<"Receipt"> | number
+    discount?: IntFilter<"Receipt"> | number
+    total?: IntFilter<"Receipt"> | number
+    createdAt?: DateTimeFilter<"Receipt"> | Date | string
+    updatedAt?: DateTimeFilter<"Receipt"> | Date | string
+    sale?: XOR<SaleScalarRelationFilter, SaleWhereInput>
+  }, "id" | "receiptNumber" | "saleId">
+
+  export type ReceiptOrderByWithAggregationInput = {
+    id?: SortOrder
+    receiptNumber?: SortOrder
+    saleId?: SortOrder
+    customerName?: SortOrder
+    paymentMethod?: SortOrder
+    subtotal?: SortOrder
+    discount?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ReceiptCountOrderByAggregateInput
+    _avg?: ReceiptAvgOrderByAggregateInput
+    _max?: ReceiptMaxOrderByAggregateInput
+    _min?: ReceiptMinOrderByAggregateInput
+    _sum?: ReceiptSumOrderByAggregateInput
+  }
+
+  export type ReceiptScalarWhereWithAggregatesInput = {
+    AND?: ReceiptScalarWhereWithAggregatesInput | ReceiptScalarWhereWithAggregatesInput[]
+    OR?: ReceiptScalarWhereWithAggregatesInput[]
+    NOT?: ReceiptScalarWhereWithAggregatesInput | ReceiptScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Receipt"> | string
+    receiptNumber?: StringWithAggregatesFilter<"Receipt"> | string
+    saleId?: StringWithAggregatesFilter<"Receipt"> | string
+    customerName?: StringWithAggregatesFilter<"Receipt"> | string
+    paymentMethod?: StringWithAggregatesFilter<"Receipt"> | string
+    subtotal?: IntWithAggregatesFilter<"Receipt"> | number
+    discount?: IntWithAggregatesFilter<"Receipt"> | number
+    total?: IntWithAggregatesFilter<"Receipt"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"Receipt"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Receipt"> | Date | string
+  }
+
   export type ProductCreateInput = {
     id?: string
     name: string
@@ -5012,6 +6390,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: SaleItemCreateNestedManyWithoutSaleInput
+    receipt?: ReceiptCreateNestedOneWithoutSaleInput
   }
 
   export type SaleUncheckedCreateInput = {
@@ -5025,6 +6404,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     items?: SaleItemUncheckedCreateNestedManyWithoutSaleInput
+    receipt?: ReceiptUncheckedCreateNestedOneWithoutSaleInput
   }
 
   export type SaleUpdateInput = {
@@ -5038,6 +6418,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: SaleItemUpdateManyWithoutSaleNestedInput
+    receipt?: ReceiptUpdateOneWithoutSaleNestedInput
   }
 
   export type SaleUncheckedUpdateInput = {
@@ -5051,6 +6432,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: SaleItemUncheckedUpdateManyWithoutSaleNestedInput
+    receipt?: ReceiptUncheckedUpdateOneWithoutSaleNestedInput
   }
 
   export type SaleCreateManyInput = {
@@ -5162,6 +6544,96 @@ export namespace Prisma {
     unitPrice?: IntFieldUpdateOperationsInput | number
     lineTotal?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReceiptCreateInput = {
+    id?: string
+    receiptNumber: string
+    customerName: string
+    paymentMethod: string
+    subtotal: number
+    discount?: number
+    total: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    sale: SaleCreateNestedOneWithoutReceiptInput
+  }
+
+  export type ReceiptUncheckedCreateInput = {
+    id?: string
+    receiptNumber: string
+    saleId: string
+    customerName: string
+    paymentMethod: string
+    subtotal: number
+    discount?: number
+    total: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReceiptUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiptNumber?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    subtotal?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sale?: SaleUpdateOneRequiredWithoutReceiptNestedInput
+  }
+
+  export type ReceiptUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiptNumber?: StringFieldUpdateOperationsInput | string
+    saleId?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    subtotal?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReceiptCreateManyInput = {
+    id?: string
+    receiptNumber: string
+    saleId: string
+    customerName: string
+    paymentMethod: string
+    subtotal: number
+    discount?: number
+    total: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReceiptUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiptNumber?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    subtotal?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReceiptUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiptNumber?: StringFieldUpdateOperationsInput | string
+    saleId?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    subtotal?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -5321,6 +6793,11 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type ReceiptNullableScalarRelationFilter = {
+    is?: ReceiptWhereInput | null
+    isNot?: ReceiptWhereInput | null
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -5446,6 +6923,57 @@ export namespace Prisma {
     lineTotal?: SortOrder
   }
 
+  export type ReceiptCountOrderByAggregateInput = {
+    id?: SortOrder
+    receiptNumber?: SortOrder
+    saleId?: SortOrder
+    customerName?: SortOrder
+    paymentMethod?: SortOrder
+    subtotal?: SortOrder
+    discount?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReceiptAvgOrderByAggregateInput = {
+    subtotal?: SortOrder
+    discount?: SortOrder
+    total?: SortOrder
+  }
+
+  export type ReceiptMaxOrderByAggregateInput = {
+    id?: SortOrder
+    receiptNumber?: SortOrder
+    saleId?: SortOrder
+    customerName?: SortOrder
+    paymentMethod?: SortOrder
+    subtotal?: SortOrder
+    discount?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReceiptMinOrderByAggregateInput = {
+    id?: SortOrder
+    receiptNumber?: SortOrder
+    saleId?: SortOrder
+    customerName?: SortOrder
+    paymentMethod?: SortOrder
+    subtotal?: SortOrder
+    discount?: SortOrder
+    total?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ReceiptSumOrderByAggregateInput = {
+    subtotal?: SortOrder
+    discount?: SortOrder
+    total?: SortOrder
+  }
+
   export type SaleItemCreateNestedManyWithoutProductInput = {
     create?: XOR<SaleItemCreateWithoutProductInput, SaleItemUncheckedCreateWithoutProductInput> | SaleItemCreateWithoutProductInput[] | SaleItemUncheckedCreateWithoutProductInput[]
     connectOrCreate?: SaleItemCreateOrConnectWithoutProductInput | SaleItemCreateOrConnectWithoutProductInput[]
@@ -5511,11 +7039,23 @@ export namespace Prisma {
     connect?: SaleItemWhereUniqueInput | SaleItemWhereUniqueInput[]
   }
 
+  export type ReceiptCreateNestedOneWithoutSaleInput = {
+    create?: XOR<ReceiptCreateWithoutSaleInput, ReceiptUncheckedCreateWithoutSaleInput>
+    connectOrCreate?: ReceiptCreateOrConnectWithoutSaleInput
+    connect?: ReceiptWhereUniqueInput
+  }
+
   export type SaleItemUncheckedCreateNestedManyWithoutSaleInput = {
     create?: XOR<SaleItemCreateWithoutSaleInput, SaleItemUncheckedCreateWithoutSaleInput> | SaleItemCreateWithoutSaleInput[] | SaleItemUncheckedCreateWithoutSaleInput[]
     connectOrCreate?: SaleItemCreateOrConnectWithoutSaleInput | SaleItemCreateOrConnectWithoutSaleInput[]
     createMany?: SaleItemCreateManySaleInputEnvelope
     connect?: SaleItemWhereUniqueInput | SaleItemWhereUniqueInput[]
+  }
+
+  export type ReceiptUncheckedCreateNestedOneWithoutSaleInput = {
+    create?: XOR<ReceiptCreateWithoutSaleInput, ReceiptUncheckedCreateWithoutSaleInput>
+    connectOrCreate?: ReceiptCreateOrConnectWithoutSaleInput
+    connect?: ReceiptWhereUniqueInput
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -5536,6 +7076,16 @@ export namespace Prisma {
     deleteMany?: SaleItemScalarWhereInput | SaleItemScalarWhereInput[]
   }
 
+  export type ReceiptUpdateOneWithoutSaleNestedInput = {
+    create?: XOR<ReceiptCreateWithoutSaleInput, ReceiptUncheckedCreateWithoutSaleInput>
+    connectOrCreate?: ReceiptCreateOrConnectWithoutSaleInput
+    upsert?: ReceiptUpsertWithoutSaleInput
+    disconnect?: ReceiptWhereInput | boolean
+    delete?: ReceiptWhereInput | boolean
+    connect?: ReceiptWhereUniqueInput
+    update?: XOR<XOR<ReceiptUpdateToOneWithWhereWithoutSaleInput, ReceiptUpdateWithoutSaleInput>, ReceiptUncheckedUpdateWithoutSaleInput>
+  }
+
   export type SaleItemUncheckedUpdateManyWithoutSaleNestedInput = {
     create?: XOR<SaleItemCreateWithoutSaleInput, SaleItemUncheckedCreateWithoutSaleInput> | SaleItemCreateWithoutSaleInput[] | SaleItemUncheckedCreateWithoutSaleInput[]
     connectOrCreate?: SaleItemCreateOrConnectWithoutSaleInput | SaleItemCreateOrConnectWithoutSaleInput[]
@@ -5548,6 +7098,16 @@ export namespace Prisma {
     update?: SaleItemUpdateWithWhereUniqueWithoutSaleInput | SaleItemUpdateWithWhereUniqueWithoutSaleInput[]
     updateMany?: SaleItemUpdateManyWithWhereWithoutSaleInput | SaleItemUpdateManyWithWhereWithoutSaleInput[]
     deleteMany?: SaleItemScalarWhereInput | SaleItemScalarWhereInput[]
+  }
+
+  export type ReceiptUncheckedUpdateOneWithoutSaleNestedInput = {
+    create?: XOR<ReceiptCreateWithoutSaleInput, ReceiptUncheckedCreateWithoutSaleInput>
+    connectOrCreate?: ReceiptCreateOrConnectWithoutSaleInput
+    upsert?: ReceiptUpsertWithoutSaleInput
+    disconnect?: ReceiptWhereInput | boolean
+    delete?: ReceiptWhereInput | boolean
+    connect?: ReceiptWhereUniqueInput
+    update?: XOR<XOR<ReceiptUpdateToOneWithWhereWithoutSaleInput, ReceiptUpdateWithoutSaleInput>, ReceiptUncheckedUpdateWithoutSaleInput>
   }
 
   export type SaleCreateNestedOneWithoutItemsInput = {
@@ -5576,6 +7136,20 @@ export namespace Prisma {
     upsert?: ProductUpsertWithoutSaleItemsInput
     connect?: ProductWhereUniqueInput
     update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutSaleItemsInput, ProductUpdateWithoutSaleItemsInput>, ProductUncheckedUpdateWithoutSaleItemsInput>
+  }
+
+  export type SaleCreateNestedOneWithoutReceiptInput = {
+    create?: XOR<SaleCreateWithoutReceiptInput, SaleUncheckedCreateWithoutReceiptInput>
+    connectOrCreate?: SaleCreateOrConnectWithoutReceiptInput
+    connect?: SaleWhereUniqueInput
+  }
+
+  export type SaleUpdateOneRequiredWithoutReceiptNestedInput = {
+    create?: XOR<SaleCreateWithoutReceiptInput, SaleUncheckedCreateWithoutReceiptInput>
+    connectOrCreate?: SaleCreateOrConnectWithoutReceiptInput
+    upsert?: SaleUpsertWithoutReceiptInput
+    connect?: SaleWhereUniqueInput
+    update?: XOR<XOR<SaleUpdateToOneWithWhereWithoutReceiptInput, SaleUpdateWithoutReceiptInput>, SaleUncheckedUpdateWithoutReceiptInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5802,6 +7376,35 @@ export namespace Prisma {
     data: SaleItemCreateManySaleInput | SaleItemCreateManySaleInput[]
   }
 
+  export type ReceiptCreateWithoutSaleInput = {
+    id?: string
+    receiptNumber: string
+    customerName: string
+    paymentMethod: string
+    subtotal: number
+    discount?: number
+    total: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReceiptUncheckedCreateWithoutSaleInput = {
+    id?: string
+    receiptNumber: string
+    customerName: string
+    paymentMethod: string
+    subtotal: number
+    discount?: number
+    total: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ReceiptCreateOrConnectWithoutSaleInput = {
+    where: ReceiptWhereUniqueInput
+    create: XOR<ReceiptCreateWithoutSaleInput, ReceiptUncheckedCreateWithoutSaleInput>
+  }
+
   export type SaleItemUpsertWithWhereUniqueWithoutSaleInput = {
     where: SaleItemWhereUniqueInput
     update: XOR<SaleItemUpdateWithoutSaleInput, SaleItemUncheckedUpdateWithoutSaleInput>
@@ -5818,6 +7421,41 @@ export namespace Prisma {
     data: XOR<SaleItemUpdateManyMutationInput, SaleItemUncheckedUpdateManyWithoutSaleInput>
   }
 
+  export type ReceiptUpsertWithoutSaleInput = {
+    update: XOR<ReceiptUpdateWithoutSaleInput, ReceiptUncheckedUpdateWithoutSaleInput>
+    create: XOR<ReceiptCreateWithoutSaleInput, ReceiptUncheckedCreateWithoutSaleInput>
+    where?: ReceiptWhereInput
+  }
+
+  export type ReceiptUpdateToOneWithWhereWithoutSaleInput = {
+    where?: ReceiptWhereInput
+    data: XOR<ReceiptUpdateWithoutSaleInput, ReceiptUncheckedUpdateWithoutSaleInput>
+  }
+
+  export type ReceiptUpdateWithoutSaleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiptNumber?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    subtotal?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReceiptUncheckedUpdateWithoutSaleInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    receiptNumber?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    subtotal?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type SaleCreateWithoutItemsInput = {
     id?: string
     customerName?: string
@@ -5828,6 +7466,7 @@ export namespace Prisma {
     notes?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    receipt?: ReceiptCreateNestedOneWithoutSaleInput
   }
 
   export type SaleUncheckedCreateWithoutItemsInput = {
@@ -5840,6 +7479,7 @@ export namespace Prisma {
     notes?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    receipt?: ReceiptUncheckedCreateNestedOneWithoutSaleInput
   }
 
   export type SaleCreateOrConnectWithoutItemsInput = {
@@ -5897,6 +7537,7 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receipt?: ReceiptUpdateOneWithoutSaleNestedInput
   }
 
   export type SaleUncheckedUpdateWithoutItemsInput = {
@@ -5909,6 +7550,7 @@ export namespace Prisma {
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    receipt?: ReceiptUncheckedUpdateOneWithoutSaleNestedInput
   }
 
   export type ProductUpsertWithoutSaleItemsInput = {
@@ -5944,6 +7586,74 @@ export namespace Prisma {
     lowStockAlert?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SaleCreateWithoutReceiptInput = {
+    id?: string
+    customerName?: string
+    paymentMethod: string
+    subtotal: number
+    discount?: number
+    total: number
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: SaleItemCreateNestedManyWithoutSaleInput
+  }
+
+  export type SaleUncheckedCreateWithoutReceiptInput = {
+    id?: string
+    customerName?: string
+    paymentMethod: string
+    subtotal: number
+    discount?: number
+    total: number
+    notes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    items?: SaleItemUncheckedCreateNestedManyWithoutSaleInput
+  }
+
+  export type SaleCreateOrConnectWithoutReceiptInput = {
+    where: SaleWhereUniqueInput
+    create: XOR<SaleCreateWithoutReceiptInput, SaleUncheckedCreateWithoutReceiptInput>
+  }
+
+  export type SaleUpsertWithoutReceiptInput = {
+    update: XOR<SaleUpdateWithoutReceiptInput, SaleUncheckedUpdateWithoutReceiptInput>
+    create: XOR<SaleCreateWithoutReceiptInput, SaleUncheckedCreateWithoutReceiptInput>
+    where?: SaleWhereInput
+  }
+
+  export type SaleUpdateToOneWithWhereWithoutReceiptInput = {
+    where?: SaleWhereInput
+    data: XOR<SaleUpdateWithoutReceiptInput, SaleUncheckedUpdateWithoutReceiptInput>
+  }
+
+  export type SaleUpdateWithoutReceiptInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    subtotal?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: SaleItemUpdateManyWithoutSaleNestedInput
+  }
+
+  export type SaleUncheckedUpdateWithoutReceiptInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    customerName?: StringFieldUpdateOperationsInput | string
+    paymentMethod?: StringFieldUpdateOperationsInput | string
+    subtotal?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    items?: SaleItemUncheckedUpdateManyWithoutSaleNestedInput
   }
 
   export type SaleItemCreateManyProductInput = {

@@ -153,6 +153,19 @@ exports.Prisma.SaleItemScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ReceiptScalarFieldEnum = {
+  id: 'id',
+  receiptNumber: 'receiptNumber',
+  saleId: 'saleId',
+  customerName: 'customerName',
+  paymentMethod: 'paymentMethod',
+  subtotal: 'subtotal',
+  discount: 'discount',
+  total: 'total',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -167,7 +180,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Product: 'Product',
   Sale: 'Sale',
-  SaleItem: 'SaleItem'
+  SaleItem: 'SaleItem',
+  Receipt: 'Receipt'
 };
 
 /**
