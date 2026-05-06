@@ -25,3 +25,41 @@ export async function createProduct(formData: FormData) {
 
   revalidatePath("/products");
 }
+
+export async function updateProduct(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+  const name = String(formData.get("name") ?? "").trim();
+  const category = String(formData.get("category") ?? "").trim();
+  const buyingPrice = Number(formData.get("buyingPrice") ?? 0);
+  const sellingPrice = Number(formData.get("sellingPrice") ?? 0);
+  const stockQuantity = Number(formData.get("stockQuantity") ?? 0);
+  const lowStockAlert = Number(formData.get("lowStockAlert") ?? 0);
+
+  await prisma.product.update({
+    where: {
+      id,
+    },
+    data: {
+      name,
+      category,
+      buyingPrice,
+      sellingPrice,
+      stockQuantity,
+      lowStockAlert,
+    },
+  });
+
+  revalidatePath("/products");
+}
+
+export async function deleteProduct(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+
+  await prisma.product.delete({
+    where: {
+      id,
+    },
+  });
+
+  revalidatePath("/products");
+}

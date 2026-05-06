@@ -20,7 +20,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { createProduct } from "./actions";
+import { createProduct, deleteProduct, updateProduct } from "./actions";
 
 type Product = {
   id: string;
@@ -44,8 +44,93 @@ function formatMoney(value: number) {
   return `KSh ${moneyFormatter.format(value)}`;
 }
 
+function ProductFormFields({ product }: { product?: Product }) {
+  return (
+    <>
+      <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+        Product Name
+        <Input
+          name="name"
+          type="text"
+          required
+          defaultValue={product?.name}
+          placeholder="e.g. Menengai Soap"
+          className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+        />
+      </label>
+
+      <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+        Category
+        <Input
+          name="category"
+          type="text"
+          required
+          defaultValue={product?.category}
+          placeholder="e.g. Soaps"
+          className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+        />
+      </label>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Buying Price
+          <Input
+            name="buyingPrice"
+            type="number"
+            required
+            min="0"
+            defaultValue={product?.buyingPrice}
+            placeholder="0"
+            className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+          />
+        </label>
+
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Selling Price
+          <Input
+            name="sellingPrice"
+            type="number"
+            required
+            min="0"
+            defaultValue={product?.sellingPrice}
+            placeholder="0"
+            className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+          />
+        </label>
+
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Stock Quantity
+          <Input
+            name="stockQuantity"
+            type="number"
+            required
+            min="0"
+            defaultValue={product?.stockQuantity}
+            placeholder="0"
+            className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+          />
+        </label>
+
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Low Stock Alert
+          <Input
+            name="lowStockAlert"
+            type="number"
+            required
+            min="0"
+            defaultValue={product?.lowStockAlert}
+            placeholder="0"
+            className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+          />
+        </label>
+      </div>
+    </>
+  );
+}
+
 export function ProductsClient({ products }: ProductsClientProps) {
   const [search, setSearch] = useState("");
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   const lowStockCount = products.filter(
     (product) => product.stockQuantity <= product.lowStockAlert
@@ -77,7 +162,8 @@ export function ProductsClient({ products }: ProductsClientProps) {
   }, [products, search]);
 
   return (
-    <Sheet>
+    <>
+      <Sheet>
       <div className="px-3 py-4 sm:px-6 lg:px-8">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:gap-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
@@ -227,6 +313,31 @@ export function ProductsClient({ products }: ProductsClientProps) {
                               </span>
                             </div>
                           </div>
+
+                          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                            <Button
+                              type="button"
+                              variant="outline"
+                              className="h-11 rounded-lg text-[11px]"
+                              onClick={() => setEditingProduct(product)}
+                            >
+                              Edit
+                            </Button>
+                            <form action={deleteProduct}>
+                              <input
+                                type="hidden"
+                                name="id"
+                                value={product.id}
+                              />
+                              <Button
+                                type="submit"
+                                variant="destructive"
+                                className="h-11 w-full rounded-lg text-[11px]"
+                              >
+                                Delete Product
+                              </Button>
+                            </form>
+                          </div>
                         </CardContent>
                       </Card>
                     );
@@ -252,83 +363,52 @@ export function ProductsClient({ products }: ProductsClientProps) {
         </SheetHeader>
 
         <form action={createProduct} className="flex flex-col gap-4 p-5 sm:p-6">
-          <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-            Product Name
-            <Input
-              name="name"
-              type="text"
-              required
-              placeholder="e.g. Menengai Soap"
-              className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
-            />
-          </label>
-
-          <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-            Category
-            <Input
-              name="category"
-              type="text"
-              required
-              placeholder="e.g. Soaps"
-              className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
-            />
-          </label>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-              Buying Price
-              <Input
-                name="buyingPrice"
-                type="number"
-                required
-                min="0"
-                placeholder="0"
-                className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
-              />
-            </label>
-
-            <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-              Selling Price
-              <Input
-                name="sellingPrice"
-                type="number"
-                required
-                min="0"
-                placeholder="0"
-                className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
-              />
-            </label>
-
-            <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-              Stock Quantity
-              <Input
-                name="stockQuantity"
-                type="number"
-                required
-                min="0"
-                placeholder="0"
-                className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
-              />
-            </label>
-
-            <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-              Low Stock Alert
-              <Input
-                name="lowStockAlert"
-                type="number"
-                required
-                min="0"
-                placeholder="0"
-                className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
-              />
-            </label>
-          </div>
+          <ProductFormFields />
 
           <Button type="submit" className="h-12 w-full rounded-lg">
             Save Product
           </Button>
         </form>
       </SheetContent>
-    </Sheet>
+      </Sheet>
+
+      <Sheet
+        open={editingProduct !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setEditingProduct(null);
+          }
+        }}
+      >
+        <SheetContent
+          side="right"
+          className="w-full overflow-y-auto bg-white p-0 sm:max-w-md"
+        >
+          <SheetHeader className="border-b border-slate-200 p-5 sm:p-6">
+            <SheetTitle className="text-left text-lg text-slate-950">
+              Edit Product
+            </SheetTitle>
+            <SheetDescription className="text-left text-slate-500">
+              Update product details and stock settings.
+            </SheetDescription>
+          </SheetHeader>
+
+          {editingProduct ? (
+            <form
+              key={editingProduct.id}
+              action={updateProduct}
+              className="flex flex-col gap-4 p-5 sm:p-6"
+            >
+              <input type="hidden" name="id" value={editingProduct.id} />
+              <ProductFormFields product={editingProduct} />
+
+              <Button type="submit" className="h-12 w-full rounded-lg">
+                Update Product
+              </Button>
+            </form>
+          ) : null}
+        </SheetContent>
+      </Sheet>
+    </>
   );
 }
