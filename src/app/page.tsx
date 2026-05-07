@@ -7,7 +7,7 @@ export default function HomePage() {
 
       <p className="mt-2 text-slate-600">
         Inventory, sales, and receipts system for wholesale shops.
-      </p>
+      </p>  
     </main>
   );
 }
