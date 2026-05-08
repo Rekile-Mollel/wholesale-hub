@@ -93,10 +93,34 @@ export function ReceiptsClient({ sales, receipts }: ReceiptsClientProps) {
     { label: "Total Receipts", value: String(receipts.length) },
   ];
 
+  function handlePrint() {
+    window.print();
+  }
+
   return (
-    <div className="px-3 py-4 sm:px-6 lg:px-8">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 sm:gap-6">
-        <div>
+    <div className="px-3 py-4 print:bg-white print:p-0 sm:px-6 lg:px-8">
+      <style>
+        {`
+          @media print {
+            aside,
+            header {
+              display: none !important;
+            }
+
+            main {
+              min-height: auto !important;
+              background: white !important;
+            }
+
+            body {
+              background: white !important;
+            }
+          }
+        `}
+      </style>
+
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 print:max-w-none print:gap-0 sm:gap-6">
+        <div className="print:hidden">
           <h1 className="text-2xl font-bold tracking-tight text-slate-950 sm:text-3xl">
             Receipts
           </h1>
@@ -105,7 +129,7 @@ export function ReceiptsClient({ sales, receipts }: ReceiptsClientProps) {
           </p>
         </div>
 
-        <section className="grid grid-cols-1 gap-3 md:grid-cols-3 lg:gap-4">
+        <section className="grid grid-cols-1 gap-3 print:hidden md:grid-cols-3 lg:gap-4">
           {summaryCards.map((item) => (
             <Card
               key={item.label}
@@ -126,8 +150,8 @@ export function ReceiptsClient({ sales, receipts }: ReceiptsClientProps) {
           ))}
         </section>
 
-        <section className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,0.9fr)_minmax(360px,1.1fr)]">
-          <Card size="sm" className="rounded-xl border-slate-200">
+        <section className="grid grid-cols-1 gap-4 print:block lg:grid-cols-[minmax(0,0.9fr)_minmax(360px,1.1fr)]">
+          <Card size="sm" className="rounded-xl border-slate-200 print:hidden">
             <CardHeader className="px-4 sm:px-5">
               <CardTitle className="text-sm text-slate-900">
                 Generate Receipt
@@ -178,26 +202,38 @@ export function ReceiptsClient({ sales, receipts }: ReceiptsClientProps) {
             </CardContent>
           </Card>
 
-          <Card size="sm" className="rounded-xl border-slate-200">
-            <CardHeader className="px-4 sm:px-5">
+          <Card
+            size="sm"
+            className="rounded-xl border-slate-200 print:border-0 print:bg-white print:shadow-none"
+          >
+            <CardHeader className="px-4 print:hidden sm:px-5">
               <CardTitle className="text-sm text-slate-900">
                 Receipt Preview
               </CardTitle>
+              <Button
+                type="button"
+                variant="outline"
+                className="mt-3 h-11 w-full rounded-lg sm:w-auto"
+                onClick={handlePrint}
+                disabled={!latestReceipt}
+              >
+                Print Receipt
+              </Button>
             </CardHeader>
-            <CardContent className="px-4 sm:px-5">
-              <div className="mx-auto w-full max-w-md rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+            <CardContent className="px-4 print:p-0 sm:px-5">
+              <div className="mx-auto w-full max-w-md rounded-lg border border-slate-200 bg-white p-4 shadow-sm print:max-w-[360px] print:rounded-none print:border-0 print:p-0 print:shadow-none sm:p-5">
                 <div className="border-b border-slate-200 pb-4 text-center">
-                  <p className="text-lg font-bold tracking-tight text-slate-950">
+                  <p className="text-xl font-bold tracking-tight text-slate-950 print:text-2xl">
                     Wholesale Hub
                   </p>
-                  <p className="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500">
-                    {latestReceipt ? "Receipt preview" : "No receipt yet"}
+                  <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-500 print:text-slate-700">
+                    Inventory &amp; Sales Receipt
                   </p>
                 </div>
 
                 {latestReceipt ? (
                   <>
-                    <div className="grid grid-cols-1 gap-3 border-b border-slate-200 py-4 text-sm">
+                    <div className="grid grid-cols-1 gap-3 border-b border-slate-200 py-4 text-sm print:text-[12px]">
                       <div className="flex items-center justify-between gap-4">
                         <span className="text-slate-500">Receipt No</span>
                         <span className="font-semibold text-slate-900">
@@ -230,11 +266,11 @@ export function ReceiptsClient({ sales, receipts }: ReceiptsClientProps) {
                       <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                         Items
                       </p>
-                      <div className="mt-3 flex flex-col gap-2">
+                      <div className="mt-3 flex flex-col gap-2 print:gap-0">
                         {latestReceipt.sale.items.map((item) => (
                           <div
                             key={item.id}
-                            className="flex items-start justify-between gap-3 rounded-lg bg-slate-50 p-3 text-sm"
+                            className="flex items-start justify-between gap-3 rounded-lg bg-slate-50 p-3 text-sm print:rounded-none print:border-b print:border-slate-100 print:bg-white print:px-0 print:py-2 print:text-[12px]"
                           >
                             <div>
                               <p className="font-medium text-slate-900">
@@ -252,7 +288,7 @@ export function ReceiptsClient({ sales, receipts }: ReceiptsClientProps) {
                       </div>
                     </div>
 
-                    <div className="flex flex-col gap-3 pt-4 text-sm">
+                    <div className="flex flex-col gap-3 pt-4 text-sm print:text-[12px]">
                       <div className="flex items-center justify-between gap-4">
                         <span className="text-slate-500">Subtotal</span>
                         <span className="font-semibold text-slate-900">
@@ -267,14 +303,20 @@ export function ReceiptsClient({ sales, receipts }: ReceiptsClientProps) {
                       </div>
                       <div className="flex items-center justify-between gap-4">
                         <span className="text-slate-500">Total</span>
-                        <span className="text-base font-bold text-slate-950">
+                        <span className="text-base font-bold text-slate-950 print:text-lg">
                           {formatMoney(latestReceipt.total)}
                         </span>
                       </div>
                     </div>
+
+                    <div className="mt-5 border-t border-slate-200 pt-4 text-center">
+                      <p className="text-xs font-medium text-slate-500 print:text-slate-700">
+                        Thank you for your business.
+                      </p>
+                    </div>
                   </>
                 ) : (
-                  <div className="py-8 text-center">
+                  <div className="py-8 text-center print:hidden">
                     <p className="text-sm font-medium text-slate-700">
                       No receipt generated yet.
                     </p>
@@ -288,7 +330,7 @@ export function ReceiptsClient({ sales, receipts }: ReceiptsClientProps) {
           </Card>
         </section>
 
-        <Card size="sm" className="rounded-xl border-slate-200">
+        <Card size="sm" className="rounded-xl border-slate-200 print:hidden">
           <CardHeader className="px-4 sm:px-5">
             <CardTitle className="text-sm text-slate-900">
               Recent Receipts
