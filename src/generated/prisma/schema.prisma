@@ -11,6 +11,8 @@ datasource db {
 model Product {
   id            String     @id @default(cuid())
   name          String
+  variant       String?
+  unit          String     @default("piece")
   category      String
   buyingPrice   Int
   sellingPrice  Int

@@ -10,6 +10,8 @@ export default async function ProductsPage() {
     select: {
       id: true,
       name: true,
+      variant: true,
+      unit: true,
       category: true,
       buyingPrice: true,
       sellingPrice: true,

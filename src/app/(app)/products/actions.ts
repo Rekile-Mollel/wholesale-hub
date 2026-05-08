@@ -6,6 +6,8 @@ import { prisma } from "@/lib/prisma";
 
 export async function createProduct(formData: FormData) {
   const name = String(formData.get("name") ?? "").trim();
+  const variant = String(formData.get("variant") ?? "").trim();
+  const unit = String(formData.get("unit") ?? "").trim() || "piece";
   const category = String(formData.get("category") ?? "").trim();
   const buyingPrice = Number(formData.get("buyingPrice") ?? 0);
   const sellingPrice = Number(formData.get("sellingPrice") ?? 0);
@@ -15,6 +17,8 @@ export async function createProduct(formData: FormData) {
   await prisma.product.create({
     data: {
       name,
+      variant: variant || null,
+      unit,
       category,
       buyingPrice,
       sellingPrice,
@@ -29,6 +33,8 @@ export async function createProduct(formData: FormData) {
 export async function updateProduct(formData: FormData) {
   const id = String(formData.get("id") ?? "");
   const name = String(formData.get("name") ?? "").trim();
+  const variant = String(formData.get("variant") ?? "").trim();
+  const unit = String(formData.get("unit") ?? "").trim() || "piece";
   const category = String(formData.get("category") ?? "").trim();
   const buyingPrice = Number(formData.get("buyingPrice") ?? 0);
   const sellingPrice = Number(formData.get("sellingPrice") ?? 0);
@@ -41,6 +47,8 @@ export async function updateProduct(formData: FormData) {
     },
     data: {
       name,
+      variant: variant || null,
+      unit,
       category,
       buyingPrice,
       sellingPrice,

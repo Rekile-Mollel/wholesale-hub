@@ -30,6 +30,8 @@ import {
 type Product = {
   id: string;
   name: string;
+  variant: string | null;
+  unit: string;
   category: string;
   buyingPrice: number;
   sellingPrice: number;
@@ -63,6 +65,30 @@ function ProductFormFields({ product }: { product?: Product }) {
           className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
         />
       </label>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Variant / Size
+          <Input
+            name="variant"
+            type="text"
+            defaultValue={product?.variant ?? ""}
+            placeholder="e.g. 100ml, 1L, 10 pack, carton"
+            className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+          />
+        </label>
+
+        <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+          Unit
+          <Input
+            name="unit"
+            type="text"
+            defaultValue={product?.unit ?? "piece"}
+            placeholder="e.g. piece, pack, carton, bottle"
+            className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+          />
+        </label>
+      </div>
 
       <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
         Category
@@ -280,6 +306,11 @@ export function ProductsClient({ products }: ProductsClientProps) {
                               <CardTitle className="text-sm text-slate-950">
                                 {product.name}
                               </CardTitle>
+                              {product.variant ? (
+                                <p className="mt-1 text-sm font-medium text-slate-700">
+                                  {product.variant}
+                                </p>
+                              ) : null}
                               <p className="mt-1 text-sm text-slate-500">
                                 Category: {product.category}
                               </p>
@@ -301,7 +332,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
                             <div className="flex items-center justify-between gap-3">
                               <span className="text-slate-500">Stock</span>
                               <span className="font-semibold text-slate-900">
-                                {product.stockQuantity}
+                                {product.stockQuantity} {product.unit}
                               </span>
                             </div>
                             <div className="flex items-center justify-between gap-3">
@@ -423,7 +454,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
                 <div className="mt-3 flex items-center justify-between gap-4 text-sm">
                   <span className="text-slate-500">Current stock</span>
                   <span className="font-semibold text-slate-900">
-                    {restockingProduct.stockQuantity}
+                    {restockingProduct.stockQuantity} {restockingProduct.unit}
                   </span>
                 </div>
               </div>
