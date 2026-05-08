@@ -9,7 +9,11 @@ export default async function ReceiptsPage() {
         createdAt: "desc",
       },
       include: {
-        items: true,
+        items: {
+          include: {
+            product: true,
+          },
+        },
         receipt: true,
       },
     }),
@@ -20,7 +24,11 @@ export default async function ReceiptsPage() {
       include: {
         sale: {
           include: {
-            items: true,
+            items: {
+              include: {
+                product: true,
+              },
+            },
           },
         },
       },
@@ -39,7 +47,10 @@ export default async function ReceiptsPage() {
         createdAt: sale.createdAt.toISOString(),
         items: sale.items.map((item) => ({
           id: item.id,
-          productName: item.productName,
+          productName: item.product.variant
+            ? `${item.product.name} - ${item.product.variant}`
+            : item.productName,
+          unit: item.product.unit,
           quantity: item.quantity,
           unitPrice: item.unitPrice,
           lineTotal: item.lineTotal,
@@ -64,7 +75,10 @@ export default async function ReceiptsPage() {
           id: receipt.sale.id,
           items: receipt.sale.items.map((item) => ({
             id: item.id,
-            productName: item.productName,
+            productName: item.product.variant
+              ? `${item.product.name} - ${item.product.variant}`
+              : item.productName,
+            unit: item.product.unit,
             quantity: item.quantity,
             unitPrice: item.unitPrice,
             lineTotal: item.lineTotal,

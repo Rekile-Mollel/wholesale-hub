@@ -51,6 +51,9 @@ export async function createSale(formData: FormData) {
   const subtotal = unitPrice * quantity;
   const total = subtotal - discount;
   const lineTotal = subtotal;
+  const productName = product.variant
+    ? `${product.name} - ${product.variant}`
+    : product.name;
 
   await prisma.$transaction(async (tx) => {
     await tx.sale.create({
@@ -64,7 +67,7 @@ export async function createSale(formData: FormData) {
         items: {
           create: {
             productId: product.id,
-            productName: product.name,
+            productName,
             quantity,
             unitPrice,
             lineTotal,
@@ -87,4 +90,5 @@ export async function createSale(formData: FormData) {
 
   revalidatePath("/sales");
   revalidatePath("/products");
+  revalidatePath("/dashboard");
 }

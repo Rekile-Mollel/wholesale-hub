@@ -22,6 +22,12 @@ function formatMoney(value: number) {
   return `KSh ${moneyFormatter.format(value)}`;
 }
 
+function formatQuantity(value: number, unit: string) {
+  const displayUnit = value === 1 || unit.endsWith("s") ? unit : `${unit}s`;
+
+  return `${value} ${displayUnit}`;
+}
+
 const quickActions = [
   { label: "Add Product", href: "/products" },
   { label: "New Sale", href: "/sales" },
@@ -58,7 +64,11 @@ export default async function DashboardPage() {
       },
       take: 5,
       include: {
-        items: true,
+        items: {
+          include: {
+            product: true,
+          },
+        },
       },
     }),
   ]);
@@ -222,7 +232,11 @@ export default async function DashboardPage() {
                         </p>
                         <p className="mt-1 text-sm text-slate-700">
                           {sale.items
-                            .map((item) => item.productName)
+                            .map((item) =>
+                              item.product.variant
+                                ? `${item.product.name} - ${item.product.variant}`
+                                : item.productName
+                            )
                             .join(", ")}
                         </p>
                       </div>
@@ -261,13 +275,25 @@ export default async function DashboardPage() {
                           <p className="text-sm font-semibold text-slate-900">
                             {product.name}
                           </p>
+                          {product.variant ? (
+                            <p className="mt-1 text-xs font-medium text-slate-700">
+                              {product.variant}
+                            </p>
+                          ) : null}
                           <p className="mt-1 text-xs text-slate-500">
-                            Alert at {product.lowStockAlert}
+                            Alert at{" "}
+                            {formatQuantity(
+                              product.lowStockAlert,
+                              product.unit
+                            )}
                           </p>
                         </div>
                         <div className="text-right">
                           <p className="text-sm font-bold text-slate-950">
-                            {product.stockQuantity}
+                            {formatQuantity(
+                              product.stockQuantity,
+                              product.unit
+                            )}
                           </p>
                           <p className="mt-1 text-xs text-slate-500">
                             in stock

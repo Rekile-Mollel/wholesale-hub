@@ -13,6 +13,7 @@ import { generateReceipt } from "./actions";
 type SaleItem = {
   id: string;
   productName: string;
+  unit: string;
   quantity: number;
   unitPrice: number;
   lineTotal: number;
@@ -64,6 +65,12 @@ const dateFormatter = new Intl.DateTimeFormat("en-KE", {
 
 function formatMoney(value: number) {
   return `KSh ${moneyFormatter.format(value)}`;
+}
+
+function formatQuantity(value: number, unit: string) {
+  const displayUnit = value === 1 || unit.endsWith("s") ? unit : `${unit}s`;
+
+  return `${value} ${displayUnit}`;
 }
 
 function isToday(value: string) {
@@ -274,10 +281,11 @@ export function ReceiptsClient({ sales, receipts }: ReceiptsClientProps) {
                           >
                             <div>
                               <p className="font-medium text-slate-900">
-                                {item.productName}
+                                {item.productName} × {item.quantity}
                               </p>
                               <p className="mt-1 text-xs text-slate-500">
-                                {item.quantity} x {formatMoney(item.unitPrice)}
+                                {formatQuantity(item.quantity, item.unit)} at{" "}
+                                {formatMoney(item.unitPrice)}
                               </p>
                             </div>
                             <span className="font-semibold text-slate-900">

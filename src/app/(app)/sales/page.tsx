@@ -10,6 +10,8 @@ export default async function SalesPage() {
     select: {
       id: true,
       name: true,
+      variant: true,
+      unit: true,
       sellingPrice: true,
       stockQuantity: true,
     },
@@ -21,7 +23,11 @@ export default async function SalesPage() {
     },
     take: 5,
     include: {
-      items: true,
+      items: {
+        include: {
+          product: true,
+        },
+      },
     },
   });
 
@@ -39,7 +45,10 @@ export default async function SalesPage() {
         createdAt: sale.createdAt.toISOString(),
         items: sale.items.map((item) => ({
           id: item.id,
-          productName: item.productName,
+          productName: item.product.variant
+            ? `${item.product.name} - ${item.product.variant}`
+            : item.productName,
+          unit: item.product.unit,
           quantity: item.quantity,
           unitPrice: item.unitPrice,
           lineTotal: item.lineTotal,

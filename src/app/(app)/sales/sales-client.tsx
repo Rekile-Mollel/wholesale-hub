@@ -14,6 +14,8 @@ import { createSale } from "./actions";
 type Product = {
   id: string;
   name: string;
+  variant: string | null;
+  unit: string;
   sellingPrice: number;
   stockQuantity: number;
 };
@@ -30,6 +32,7 @@ type RecentSale = {
   items: {
     id: string;
     productName: string;
+    unit: string;
     quantity: number;
     unitPrice: number;
     lineTotal: number;
@@ -52,6 +55,12 @@ const dateFormatter = new Intl.DateTimeFormat("en-KE", {
 
 function formatMoney(value: number) {
   return `KSh ${moneyFormatter.format(value)}`;
+}
+
+function formatQuantity(value: number, unit: string) {
+  const displayUnit = value === 1 || unit.endsWith("s") ? unit : `${unit}s`;
+
+  return `${value} ${displayUnit}`;
 }
 
 function isToday(value: string) {
@@ -143,7 +152,10 @@ export function SalesClient({ products, recentSales }: SalesClientProps) {
                       </option>
                       {products.map((product) => (
                         <option key={product.id} value={product.id}>
-                          {product.name} - Stock: {product.stockQuantity}
+                          {product.name}
+                          {product.variant ? ` - ${product.variant}` : ""} (
+                          {formatQuantity(product.stockQuantity, product.unit)}{" "}
+                          available)
                         </option>
                       ))}
                     </select>
@@ -259,7 +271,8 @@ export function SalesClient({ products, recentSales }: SalesClientProps) {
                             className="flex items-center justify-between gap-3 text-sm"
                           >
                             <span className="text-slate-600">
-                              {item.productName} x {item.quantity}
+                              {item.productName} x{" "}
+                              {formatQuantity(item.quantity, item.unit)}
                             </span>
                             <span className="font-semibold text-slate-900">
                               {formatMoney(item.lineTotal)}
