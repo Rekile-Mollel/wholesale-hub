@@ -63,3 +63,26 @@ export async function deleteProduct(formData: FormData) {
 
   revalidatePath("/products");
 }
+
+export async function restockProduct(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+  const quantity = Number(formData.get("quantity") ?? 0);
+
+  if (!Number.isFinite(quantity) || quantity <= 0) {
+    throw new Error("Restock quantity must be greater than 0.");
+  }
+
+  await prisma.product.update({
+    where: {
+      id,
+    },
+    data: {
+      stockQuantity: {
+        increment: quantity,
+      },
+    },
+  });
+
+  revalidatePath("/products");
+  revalidatePath("/dashboard");
+}

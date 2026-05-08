@@ -20,7 +20,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { createProduct, deleteProduct, updateProduct } from "./actions";
+import {
+  createProduct,
+  deleteProduct,
+  restockProduct,
+  updateProduct,
+} from "./actions";
 
 type Product = {
   id: string;
@@ -131,6 +136,9 @@ function ProductFormFields({ product }: { product?: Product }) {
 export function ProductsClient({ products }: ProductsClientProps) {
   const [search, setSearch] = useState("");
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [restockingProduct, setRestockingProduct] = useState<Product | null>(
+    null
+  );
 
   const lowStockCount = products.filter(
     (product) => product.stockQuantity <= product.lowStockAlert
@@ -314,11 +322,18 @@ export function ProductsClient({ products }: ProductsClientProps) {
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                          <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                            <Button
+                              type="button"
+                              className="h-11 w-full rounded-lg text-[11px]"
+                              onClick={() => setRestockingProduct(product)}
+                            >
+                              Restock
+                            </Button>
                             <Button
                               type="button"
                               variant="outline"
-                              className="h-11 rounded-lg text-[11px]"
+                              className="h-11 w-full rounded-lg text-[11px]"
                               onClick={() => setEditingProduct(product)}
                             >
                               Edit
@@ -334,7 +349,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
                                 variant="destructive"
                                 className="h-11 w-full rounded-lg text-[11px]"
                               >
-                                Delete Product
+                                Delete
                               </Button>
                             </form>
                           </div>
@@ -370,6 +385,67 @@ export function ProductsClient({ products }: ProductsClientProps) {
           </Button>
         </form>
       </SheetContent>
+      </Sheet>
+
+      <Sheet
+        open={restockingProduct !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setRestockingProduct(null);
+          }
+        }}
+      >
+        <SheetContent
+          side="right"
+          className="w-full overflow-y-auto bg-white p-0 sm:max-w-md"
+        >
+          <SheetHeader className="border-b border-slate-200 p-5 sm:p-6">
+            <SheetTitle className="text-left text-lg text-slate-950">
+              Restock Product
+            </SheetTitle>
+            <SheetDescription className="text-left text-slate-500">
+              Add new stock to an existing product.
+            </SheetDescription>
+          </SheetHeader>
+
+          {restockingProduct ? (
+            <form
+              key={restockingProduct.id}
+              action={restockProduct}
+              className="flex flex-col gap-4 p-5 sm:p-6"
+            >
+              <input type="hidden" name="id" value={restockingProduct.id} />
+
+              <div className="rounded-lg bg-slate-50 p-4">
+                <p className="text-sm font-semibold text-slate-950">
+                  {restockingProduct.name}
+                </p>
+                <div className="mt-3 flex items-center justify-between gap-4 text-sm">
+                  <span className="text-slate-500">Current stock</span>
+                  <span className="font-semibold text-slate-900">
+                    {restockingProduct.stockQuantity}
+                  </span>
+                </div>
+              </div>
+
+              <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+                Quantity to add
+                <Input
+                  name="quantity"
+                  type="number"
+                  required
+                  min="1"
+                  placeholder="0"
+                  className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+                />
+              </label>
+
+              <Button type="submit" className="h-12 w-full rounded-lg">
+                Restock Product
+              </Button>
+            </form>
+          ) : null}
+        </SheetContent>
       </Sheet>
 
       <Sheet
