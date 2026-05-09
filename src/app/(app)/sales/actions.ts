@@ -86,6 +86,15 @@ export async function createSale(formData: FormData) {
         },
       },
     });
+
+    await tx.stockMovement.create({
+      data: {
+        productId: product.id,
+        type: "SALE",
+        quantity: -quantity,
+        note: "Sale recorded",
+      },
+    });
   });
 
   revalidatePath("/sales");

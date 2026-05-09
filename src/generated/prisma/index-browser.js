@@ -168,6 +168,15 @@ exports.Prisma.ReceiptScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.StockMovementScalarFieldEnum = {
+  id: 'id',
+  productId: 'productId',
+  type: 'type',
+  quantity: 'quantity',
+  note: 'note',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -183,7 +192,8 @@ exports.Prisma.ModelName = {
   Product: 'Product',
   Sale: 'Sale',
   SaleItem: 'SaleItem',
-  Receipt: 'Receipt'
+  Receipt: 'Receipt',
+  StockMovement: 'StockMovement'
 };
 
 /**

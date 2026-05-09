@@ -33,6 +33,11 @@ export type SaleItem = $Result.DefaultSelection<Prisma.$SaleItemPayload>
  * 
  */
 export type Receipt = $Result.DefaultSelection<Prisma.$ReceiptPayload>
+/**
+ * Model StockMovement
+ * 
+ */
+export type StockMovement = $Result.DefaultSelection<Prisma.$StockMovementPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -191,6 +196,16 @@ export class PrismaClient<
     * ```
     */
   get receipt(): Prisma.ReceiptDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.stockMovement`: Exposes CRUD operations for the **StockMovement** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StockMovements
+    * const stockMovements = await prisma.stockMovement.findMany()
+    * ```
+    */
+  get stockMovement(): Prisma.StockMovementDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -635,7 +650,8 @@ export namespace Prisma {
     Product: 'Product',
     Sale: 'Sale',
     SaleItem: 'SaleItem',
-    Receipt: 'Receipt'
+    Receipt: 'Receipt',
+    StockMovement: 'StockMovement'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -654,7 +670,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "product" | "sale" | "saleItem" | "receipt"
+      modelProps: "product" | "sale" | "saleItem" | "receipt" | "stockMovement"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -954,6 +970,80 @@ export namespace Prisma {
           }
         }
       }
+      StockMovement: {
+        payload: Prisma.$StockMovementPayload<ExtArgs>
+        fields: Prisma.StockMovementFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StockMovementFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StockMovementFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload>
+          }
+          findFirst: {
+            args: Prisma.StockMovementFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StockMovementFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload>
+          }
+          findMany: {
+            args: Prisma.StockMovementFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload>[]
+          }
+          create: {
+            args: Prisma.StockMovementCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload>
+          }
+          createMany: {
+            args: Prisma.StockMovementCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StockMovementCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload>[]
+          }
+          delete: {
+            args: Prisma.StockMovementDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload>
+          }
+          update: {
+            args: Prisma.StockMovementUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload>
+          }
+          deleteMany: {
+            args: Prisma.StockMovementDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StockMovementUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StockMovementUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload>[]
+          }
+          upsert: {
+            args: Prisma.StockMovementUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StockMovementPayload>
+          }
+          aggregate: {
+            args: Prisma.StockMovementAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStockMovement>
+          }
+          groupBy: {
+            args: Prisma.StockMovementGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StockMovementGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StockMovementCountArgs<ExtArgs>
+            result: $Utils.Optional<StockMovementCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1054,6 +1144,7 @@ export namespace Prisma {
     sale?: SaleOmit
     saleItem?: SaleItemOmit
     receipt?: ReceiptOmit
+    stockMovement?: StockMovementOmit
   }
 
   /* Types for Logging */
@@ -1135,10 +1226,12 @@ export namespace Prisma {
 
   export type ProductCountOutputType = {
     saleItems: number
+    stockMovements: number
   }
 
   export type ProductCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     saleItems?: boolean | ProductCountOutputTypeCountSaleItemsArgs
+    stockMovements?: boolean | ProductCountOutputTypeCountStockMovementsArgs
   }
 
   // Custom InputTypes
@@ -1157,6 +1250,13 @@ export namespace Prisma {
    */
   export type ProductCountOutputTypeCountSaleItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SaleItemWhereInput
+  }
+
+  /**
+   * ProductCountOutputType without action
+   */
+  export type ProductCountOutputTypeCountStockMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StockMovementWhereInput
   }
 
 
@@ -1454,6 +1554,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     saleItems?: boolean | Product$saleItemsArgs<ExtArgs>
+    stockMovements?: boolean | Product$stockMovementsArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["product"]>
 
@@ -1502,6 +1603,7 @@ export namespace Prisma {
   export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "variant" | "unit" | "category" | "buyingPrice" | "sellingPrice" | "stockQuantity" | "lowStockAlert" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     saleItems?: boolean | Product$saleItemsArgs<ExtArgs>
+    stockMovements?: boolean | Product$stockMovementsArgs<ExtArgs>
     _count?: boolean | ProductCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1511,6 +1613,7 @@ export namespace Prisma {
     name: "Product"
     objects: {
       saleItems: Prisma.$SaleItemPayload<ExtArgs>[]
+      stockMovements: Prisma.$StockMovementPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -1919,6 +2022,7 @@ export namespace Prisma {
   export interface Prisma__ProductClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     saleItems<T extends Product$saleItemsArgs<ExtArgs> = {}>(args?: Subset<T, Product$saleItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SaleItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    stockMovements<T extends Product$stockMovementsArgs<ExtArgs> = {}>(args?: Subset<T, Product$stockMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2366,6 +2470,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: SaleItemScalarFieldEnum | SaleItemScalarFieldEnum[]
+  }
+
+  /**
+   * Product.stockMovements
+   */
+  export type Product$stockMovementsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    where?: StockMovementWhereInput
+    orderBy?: StockMovementOrderByWithRelationInput | StockMovementOrderByWithRelationInput[]
+    cursor?: StockMovementWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StockMovementScalarFieldEnum | StockMovementScalarFieldEnum[]
   }
 
   /**
@@ -5881,6 +6009,1109 @@ export namespace Prisma {
 
 
   /**
+   * Model StockMovement
+   */
+
+  export type AggregateStockMovement = {
+    _count: StockMovementCountAggregateOutputType | null
+    _avg: StockMovementAvgAggregateOutputType | null
+    _sum: StockMovementSumAggregateOutputType | null
+    _min: StockMovementMinAggregateOutputType | null
+    _max: StockMovementMaxAggregateOutputType | null
+  }
+
+  export type StockMovementAvgAggregateOutputType = {
+    quantity: number | null
+  }
+
+  export type StockMovementSumAggregateOutputType = {
+    quantity: number | null
+  }
+
+  export type StockMovementMinAggregateOutputType = {
+    id: string | null
+    productId: string | null
+    type: string | null
+    quantity: number | null
+    note: string | null
+    createdAt: Date | null
+  }
+
+  export type StockMovementMaxAggregateOutputType = {
+    id: string | null
+    productId: string | null
+    type: string | null
+    quantity: number | null
+    note: string | null
+    createdAt: Date | null
+  }
+
+  export type StockMovementCountAggregateOutputType = {
+    id: number
+    productId: number
+    type: number
+    quantity: number
+    note: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type StockMovementAvgAggregateInputType = {
+    quantity?: true
+  }
+
+  export type StockMovementSumAggregateInputType = {
+    quantity?: true
+  }
+
+  export type StockMovementMinAggregateInputType = {
+    id?: true
+    productId?: true
+    type?: true
+    quantity?: true
+    note?: true
+    createdAt?: true
+  }
+
+  export type StockMovementMaxAggregateInputType = {
+    id?: true
+    productId?: true
+    type?: true
+    quantity?: true
+    note?: true
+    createdAt?: true
+  }
+
+  export type StockMovementCountAggregateInputType = {
+    id?: true
+    productId?: true
+    type?: true
+    quantity?: true
+    note?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type StockMovementAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StockMovement to aggregate.
+     */
+    where?: StockMovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StockMovements to fetch.
+     */
+    orderBy?: StockMovementOrderByWithRelationInput | StockMovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StockMovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StockMovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StockMovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StockMovements
+    **/
+    _count?: true | StockMovementCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StockMovementAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StockMovementSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StockMovementMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StockMovementMaxAggregateInputType
+  }
+
+  export type GetStockMovementAggregateType<T extends StockMovementAggregateArgs> = {
+        [P in keyof T & keyof AggregateStockMovement]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStockMovement[P]>
+      : GetScalarType<T[P], AggregateStockMovement[P]>
+  }
+
+
+
+
+  export type StockMovementGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StockMovementWhereInput
+    orderBy?: StockMovementOrderByWithAggregationInput | StockMovementOrderByWithAggregationInput[]
+    by: StockMovementScalarFieldEnum[] | StockMovementScalarFieldEnum
+    having?: StockMovementScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StockMovementCountAggregateInputType | true
+    _avg?: StockMovementAvgAggregateInputType
+    _sum?: StockMovementSumAggregateInputType
+    _min?: StockMovementMinAggregateInputType
+    _max?: StockMovementMaxAggregateInputType
+  }
+
+  export type StockMovementGroupByOutputType = {
+    id: string
+    productId: string
+    type: string
+    quantity: number
+    note: string | null
+    createdAt: Date
+    _count: StockMovementCountAggregateOutputType | null
+    _avg: StockMovementAvgAggregateOutputType | null
+    _sum: StockMovementSumAggregateOutputType | null
+    _min: StockMovementMinAggregateOutputType | null
+    _max: StockMovementMaxAggregateOutputType | null
+  }
+
+  type GetStockMovementGroupByPayload<T extends StockMovementGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StockMovementGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StockMovementGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StockMovementGroupByOutputType[P]>
+            : GetScalarType<T[P], StockMovementGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StockMovementSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    productId?: boolean
+    type?: boolean
+    quantity?: boolean
+    note?: boolean
+    createdAt?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stockMovement"]>
+
+  export type StockMovementSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    productId?: boolean
+    type?: boolean
+    quantity?: boolean
+    note?: boolean
+    createdAt?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stockMovement"]>
+
+  export type StockMovementSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    productId?: boolean
+    type?: boolean
+    quantity?: boolean
+    note?: boolean
+    createdAt?: boolean
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["stockMovement"]>
+
+  export type StockMovementSelectScalar = {
+    id?: boolean
+    productId?: boolean
+    type?: boolean
+    quantity?: boolean
+    note?: boolean
+    createdAt?: boolean
+  }
+
+  export type StockMovementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "productId" | "type" | "quantity" | "note" | "createdAt", ExtArgs["result"]["stockMovement"]>
+  export type StockMovementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }
+  export type StockMovementIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }
+  export type StockMovementIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    product?: boolean | ProductDefaultArgs<ExtArgs>
+  }
+
+  export type $StockMovementPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StockMovement"
+    objects: {
+      product: Prisma.$ProductPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      productId: string
+      type: string
+      quantity: number
+      note: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["stockMovement"]>
+    composites: {}
+  }
+
+  type StockMovementGetPayload<S extends boolean | null | undefined | StockMovementDefaultArgs> = $Result.GetResult<Prisma.$StockMovementPayload, S>
+
+  type StockMovementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StockMovementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StockMovementCountAggregateInputType | true
+    }
+
+  export interface StockMovementDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StockMovement'], meta: { name: 'StockMovement' } }
+    /**
+     * Find zero or one StockMovement that matches the filter.
+     * @param {StockMovementFindUniqueArgs} args - Arguments to find a StockMovement
+     * @example
+     * // Get one StockMovement
+     * const stockMovement = await prisma.stockMovement.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StockMovementFindUniqueArgs>(args: SelectSubset<T, StockMovementFindUniqueArgs<ExtArgs>>): Prisma__StockMovementClient<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StockMovement that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StockMovementFindUniqueOrThrowArgs} args - Arguments to find a StockMovement
+     * @example
+     * // Get one StockMovement
+     * const stockMovement = await prisma.stockMovement.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StockMovementFindUniqueOrThrowArgs>(args: SelectSubset<T, StockMovementFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StockMovementClient<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StockMovement that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StockMovementFindFirstArgs} args - Arguments to find a StockMovement
+     * @example
+     * // Get one StockMovement
+     * const stockMovement = await prisma.stockMovement.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StockMovementFindFirstArgs>(args?: SelectSubset<T, StockMovementFindFirstArgs<ExtArgs>>): Prisma__StockMovementClient<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StockMovement that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StockMovementFindFirstOrThrowArgs} args - Arguments to find a StockMovement
+     * @example
+     * // Get one StockMovement
+     * const stockMovement = await prisma.stockMovement.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StockMovementFindFirstOrThrowArgs>(args?: SelectSubset<T, StockMovementFindFirstOrThrowArgs<ExtArgs>>): Prisma__StockMovementClient<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StockMovements that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StockMovementFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StockMovements
+     * const stockMovements = await prisma.stockMovement.findMany()
+     * 
+     * // Get first 10 StockMovements
+     * const stockMovements = await prisma.stockMovement.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const stockMovementWithIdOnly = await prisma.stockMovement.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends StockMovementFindManyArgs>(args?: SelectSubset<T, StockMovementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StockMovement.
+     * @param {StockMovementCreateArgs} args - Arguments to create a StockMovement.
+     * @example
+     * // Create one StockMovement
+     * const StockMovement = await prisma.stockMovement.create({
+     *   data: {
+     *     // ... data to create a StockMovement
+     *   }
+     * })
+     * 
+     */
+    create<T extends StockMovementCreateArgs>(args: SelectSubset<T, StockMovementCreateArgs<ExtArgs>>): Prisma__StockMovementClient<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StockMovements.
+     * @param {StockMovementCreateManyArgs} args - Arguments to create many StockMovements.
+     * @example
+     * // Create many StockMovements
+     * const stockMovement = await prisma.stockMovement.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StockMovementCreateManyArgs>(args?: SelectSubset<T, StockMovementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StockMovements and returns the data saved in the database.
+     * @param {StockMovementCreateManyAndReturnArgs} args - Arguments to create many StockMovements.
+     * @example
+     * // Create many StockMovements
+     * const stockMovement = await prisma.stockMovement.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StockMovements and only return the `id`
+     * const stockMovementWithIdOnly = await prisma.stockMovement.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StockMovementCreateManyAndReturnArgs>(args?: SelectSubset<T, StockMovementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StockMovement.
+     * @param {StockMovementDeleteArgs} args - Arguments to delete one StockMovement.
+     * @example
+     * // Delete one StockMovement
+     * const StockMovement = await prisma.stockMovement.delete({
+     *   where: {
+     *     // ... filter to delete one StockMovement
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StockMovementDeleteArgs>(args: SelectSubset<T, StockMovementDeleteArgs<ExtArgs>>): Prisma__StockMovementClient<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StockMovement.
+     * @param {StockMovementUpdateArgs} args - Arguments to update one StockMovement.
+     * @example
+     * // Update one StockMovement
+     * const stockMovement = await prisma.stockMovement.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StockMovementUpdateArgs>(args: SelectSubset<T, StockMovementUpdateArgs<ExtArgs>>): Prisma__StockMovementClient<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StockMovements.
+     * @param {StockMovementDeleteManyArgs} args - Arguments to filter StockMovements to delete.
+     * @example
+     * // Delete a few StockMovements
+     * const { count } = await prisma.stockMovement.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StockMovementDeleteManyArgs>(args?: SelectSubset<T, StockMovementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StockMovements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StockMovementUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StockMovements
+     * const stockMovement = await prisma.stockMovement.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StockMovementUpdateManyArgs>(args: SelectSubset<T, StockMovementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StockMovements and returns the data updated in the database.
+     * @param {StockMovementUpdateManyAndReturnArgs} args - Arguments to update many StockMovements.
+     * @example
+     * // Update many StockMovements
+     * const stockMovement = await prisma.stockMovement.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StockMovements and only return the `id`
+     * const stockMovementWithIdOnly = await prisma.stockMovement.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StockMovementUpdateManyAndReturnArgs>(args: SelectSubset<T, StockMovementUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StockMovement.
+     * @param {StockMovementUpsertArgs} args - Arguments to update or create a StockMovement.
+     * @example
+     * // Update or create a StockMovement
+     * const stockMovement = await prisma.stockMovement.upsert({
+     *   create: {
+     *     // ... data to create a StockMovement
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StockMovement we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StockMovementUpsertArgs>(args: SelectSubset<T, StockMovementUpsertArgs<ExtArgs>>): Prisma__StockMovementClient<$Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StockMovements.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StockMovementCountArgs} args - Arguments to filter StockMovements to count.
+     * @example
+     * // Count the number of StockMovements
+     * const count = await prisma.stockMovement.count({
+     *   where: {
+     *     // ... the filter for the StockMovements we want to count
+     *   }
+     * })
+    **/
+    count<T extends StockMovementCountArgs>(
+      args?: Subset<T, StockMovementCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StockMovementCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StockMovement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StockMovementAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StockMovementAggregateArgs>(args: Subset<T, StockMovementAggregateArgs>): Prisma.PrismaPromise<GetStockMovementAggregateType<T>>
+
+    /**
+     * Group by StockMovement.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StockMovementGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StockMovementGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StockMovementGroupByArgs['orderBy'] }
+        : { orderBy?: StockMovementGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StockMovementGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStockMovementGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StockMovement model
+   */
+  readonly fields: StockMovementFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StockMovement.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StockMovementClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    product<T extends ProductDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProductDefaultArgs<ExtArgs>>): Prisma__ProductClient<$Result.GetResult<Prisma.$ProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StockMovement model
+   */
+  interface StockMovementFieldRefs {
+    readonly id: FieldRef<"StockMovement", 'String'>
+    readonly productId: FieldRef<"StockMovement", 'String'>
+    readonly type: FieldRef<"StockMovement", 'String'>
+    readonly quantity: FieldRef<"StockMovement", 'Int'>
+    readonly note: FieldRef<"StockMovement", 'String'>
+    readonly createdAt: FieldRef<"StockMovement", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StockMovement findUnique
+   */
+  export type StockMovementFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which StockMovement to fetch.
+     */
+    where: StockMovementWhereUniqueInput
+  }
+
+  /**
+   * StockMovement findUniqueOrThrow
+   */
+  export type StockMovementFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which StockMovement to fetch.
+     */
+    where: StockMovementWhereUniqueInput
+  }
+
+  /**
+   * StockMovement findFirst
+   */
+  export type StockMovementFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which StockMovement to fetch.
+     */
+    where?: StockMovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StockMovements to fetch.
+     */
+    orderBy?: StockMovementOrderByWithRelationInput | StockMovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StockMovements.
+     */
+    cursor?: StockMovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StockMovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StockMovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StockMovements.
+     */
+    distinct?: StockMovementScalarFieldEnum | StockMovementScalarFieldEnum[]
+  }
+
+  /**
+   * StockMovement findFirstOrThrow
+   */
+  export type StockMovementFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which StockMovement to fetch.
+     */
+    where?: StockMovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StockMovements to fetch.
+     */
+    orderBy?: StockMovementOrderByWithRelationInput | StockMovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StockMovements.
+     */
+    cursor?: StockMovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StockMovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StockMovements.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StockMovements.
+     */
+    distinct?: StockMovementScalarFieldEnum | StockMovementScalarFieldEnum[]
+  }
+
+  /**
+   * StockMovement findMany
+   */
+  export type StockMovementFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    /**
+     * Filter, which StockMovements to fetch.
+     */
+    where?: StockMovementWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StockMovements to fetch.
+     */
+    orderBy?: StockMovementOrderByWithRelationInput | StockMovementOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StockMovements.
+     */
+    cursor?: StockMovementWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StockMovements from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StockMovements.
+     */
+    skip?: number
+    distinct?: StockMovementScalarFieldEnum | StockMovementScalarFieldEnum[]
+  }
+
+  /**
+   * StockMovement create
+   */
+  export type StockMovementCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    /**
+     * The data needed to create a StockMovement.
+     */
+    data: XOR<StockMovementCreateInput, StockMovementUncheckedCreateInput>
+  }
+
+  /**
+   * StockMovement createMany
+   */
+  export type StockMovementCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StockMovements.
+     */
+    data: StockMovementCreateManyInput | StockMovementCreateManyInput[]
+  }
+
+  /**
+   * StockMovement createManyAndReturn
+   */
+  export type StockMovementCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * The data used to create many StockMovements.
+     */
+    data: StockMovementCreateManyInput | StockMovementCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StockMovement update
+   */
+  export type StockMovementUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    /**
+     * The data needed to update a StockMovement.
+     */
+    data: XOR<StockMovementUpdateInput, StockMovementUncheckedUpdateInput>
+    /**
+     * Choose, which StockMovement to update.
+     */
+    where: StockMovementWhereUniqueInput
+  }
+
+  /**
+   * StockMovement updateMany
+   */
+  export type StockMovementUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StockMovements.
+     */
+    data: XOR<StockMovementUpdateManyMutationInput, StockMovementUncheckedUpdateManyInput>
+    /**
+     * Filter which StockMovements to update
+     */
+    where?: StockMovementWhereInput
+    /**
+     * Limit how many StockMovements to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StockMovement updateManyAndReturn
+   */
+  export type StockMovementUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * The data used to update StockMovements.
+     */
+    data: XOR<StockMovementUpdateManyMutationInput, StockMovementUncheckedUpdateManyInput>
+    /**
+     * Filter which StockMovements to update
+     */
+    where?: StockMovementWhereInput
+    /**
+     * Limit how many StockMovements to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * StockMovement upsert
+   */
+  export type StockMovementUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    /**
+     * The filter to search for the StockMovement to update in case it exists.
+     */
+    where: StockMovementWhereUniqueInput
+    /**
+     * In case the StockMovement found by the `where` argument doesn't exist, create a new StockMovement with this data.
+     */
+    create: XOR<StockMovementCreateInput, StockMovementUncheckedCreateInput>
+    /**
+     * In case the StockMovement was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StockMovementUpdateInput, StockMovementUncheckedUpdateInput>
+  }
+
+  /**
+   * StockMovement delete
+   */
+  export type StockMovementDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+    /**
+     * Filter which StockMovement to delete.
+     */
+    where: StockMovementWhereUniqueInput
+  }
+
+  /**
+   * StockMovement deleteMany
+   */
+  export type StockMovementDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StockMovements to delete
+     */
+    where?: StockMovementWhereInput
+    /**
+     * Limit how many StockMovements to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StockMovement without action
+   */
+  export type StockMovementDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StockMovement
+     */
+    select?: StockMovementSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StockMovement
+     */
+    omit?: StockMovementOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StockMovementInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -5953,6 +7184,18 @@ export namespace Prisma {
   export type ReceiptScalarFieldEnum = (typeof ReceiptScalarFieldEnum)[keyof typeof ReceiptScalarFieldEnum]
 
 
+  export const StockMovementScalarFieldEnum: {
+    id: 'id',
+    productId: 'productId',
+    type: 'type',
+    quantity: 'quantity',
+    note: 'note',
+    createdAt: 'createdAt'
+  };
+
+  export type StockMovementScalarFieldEnum = (typeof StockMovementScalarFieldEnum)[keyof typeof StockMovementScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -6021,6 +7264,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     saleItems?: SaleItemListRelationFilter
+    stockMovements?: StockMovementListRelationFilter
   }
 
   export type ProductOrderByWithRelationInput = {
@@ -6036,6 +7280,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     saleItems?: SaleItemOrderByRelationAggregateInput
+    stockMovements?: StockMovementOrderByRelationAggregateInput
   }
 
   export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -6054,6 +7299,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Product"> | Date | string
     updatedAt?: DateTimeFilter<"Product"> | Date | string
     saleItems?: SaleItemListRelationFilter
+    stockMovements?: StockMovementListRelationFilter
   }, "id">
 
   export type ProductOrderByWithAggregationInput = {
@@ -6329,6 +7575,68 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Receipt"> | Date | string
   }
 
+  export type StockMovementWhereInput = {
+    AND?: StockMovementWhereInput | StockMovementWhereInput[]
+    OR?: StockMovementWhereInput[]
+    NOT?: StockMovementWhereInput | StockMovementWhereInput[]
+    id?: StringFilter<"StockMovement"> | string
+    productId?: StringFilter<"StockMovement"> | string
+    type?: StringFilter<"StockMovement"> | string
+    quantity?: IntFilter<"StockMovement"> | number
+    note?: StringNullableFilter<"StockMovement"> | string | null
+    createdAt?: DateTimeFilter<"StockMovement"> | Date | string
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+  }
+
+  export type StockMovementOrderByWithRelationInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    type?: SortOrder
+    quantity?: SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    product?: ProductOrderByWithRelationInput
+  }
+
+  export type StockMovementWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: StockMovementWhereInput | StockMovementWhereInput[]
+    OR?: StockMovementWhereInput[]
+    NOT?: StockMovementWhereInput | StockMovementWhereInput[]
+    productId?: StringFilter<"StockMovement"> | string
+    type?: StringFilter<"StockMovement"> | string
+    quantity?: IntFilter<"StockMovement"> | number
+    note?: StringNullableFilter<"StockMovement"> | string | null
+    createdAt?: DateTimeFilter<"StockMovement"> | Date | string
+    product?: XOR<ProductScalarRelationFilter, ProductWhereInput>
+  }, "id">
+
+  export type StockMovementOrderByWithAggregationInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    type?: SortOrder
+    quantity?: SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: StockMovementCountOrderByAggregateInput
+    _avg?: StockMovementAvgOrderByAggregateInput
+    _max?: StockMovementMaxOrderByAggregateInput
+    _min?: StockMovementMinOrderByAggregateInput
+    _sum?: StockMovementSumOrderByAggregateInput
+  }
+
+  export type StockMovementScalarWhereWithAggregatesInput = {
+    AND?: StockMovementScalarWhereWithAggregatesInput | StockMovementScalarWhereWithAggregatesInput[]
+    OR?: StockMovementScalarWhereWithAggregatesInput[]
+    NOT?: StockMovementScalarWhereWithAggregatesInput | StockMovementScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"StockMovement"> | string
+    productId?: StringWithAggregatesFilter<"StockMovement"> | string
+    type?: StringWithAggregatesFilter<"StockMovement"> | string
+    quantity?: IntWithAggregatesFilter<"StockMovement"> | number
+    note?: StringNullableWithAggregatesFilter<"StockMovement"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"StockMovement"> | Date | string
+  }
+
   export type ProductCreateInput = {
     id?: string
     name: string
@@ -6342,6 +7650,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     saleItems?: SaleItemCreateNestedManyWithoutProductInput
+    stockMovements?: StockMovementCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateInput = {
@@ -6357,6 +7666,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     saleItems?: SaleItemUncheckedCreateNestedManyWithoutProductInput
+    stockMovements?: StockMovementUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductUpdateInput = {
@@ -6372,6 +7682,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     saleItems?: SaleItemUpdateManyWithoutProductNestedInput
+    stockMovements?: StockMovementUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateInput = {
@@ -6387,6 +7698,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     saleItems?: SaleItemUncheckedUpdateManyWithoutProductNestedInput
+    stockMovements?: StockMovementUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type ProductCreateManyInput = {
@@ -6688,6 +8000,68 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StockMovementCreateInput = {
+    id?: string
+    type: string
+    quantity: number
+    note?: string | null
+    createdAt?: Date | string
+    product: ProductCreateNestedOneWithoutStockMovementsInput
+  }
+
+  export type StockMovementUncheckedCreateInput = {
+    id?: string
+    productId: string
+    type: string
+    quantity: number
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type StockMovementUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    product?: ProductUpdateOneRequiredWithoutStockMovementsNestedInput
+  }
+
+  export type StockMovementUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StockMovementCreateManyInput = {
+    id?: string
+    productId: string
+    type: string
+    quantity: number
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type StockMovementUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StockMovementUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -6744,12 +8118,22 @@ export namespace Prisma {
     none?: SaleItemWhereInput
   }
 
+  export type StockMovementListRelationFilter = {
+    every?: StockMovementWhereInput
+    some?: StockMovementWhereInput
+    none?: StockMovementWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type SaleItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StockMovementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -7032,6 +8416,41 @@ export namespace Prisma {
     total?: SortOrder
   }
 
+  export type StockMovementCountOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    type?: SortOrder
+    quantity?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StockMovementAvgOrderByAggregateInput = {
+    quantity?: SortOrder
+  }
+
+  export type StockMovementMaxOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    type?: SortOrder
+    quantity?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StockMovementMinOrderByAggregateInput = {
+    id?: SortOrder
+    productId?: SortOrder
+    type?: SortOrder
+    quantity?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type StockMovementSumOrderByAggregateInput = {
+    quantity?: SortOrder
+  }
+
   export type SaleItemCreateNestedManyWithoutProductInput = {
     create?: XOR<SaleItemCreateWithoutProductInput, SaleItemUncheckedCreateWithoutProductInput> | SaleItemCreateWithoutProductInput[] | SaleItemUncheckedCreateWithoutProductInput[]
     connectOrCreate?: SaleItemCreateOrConnectWithoutProductInput | SaleItemCreateOrConnectWithoutProductInput[]
@@ -7039,11 +8458,25 @@ export namespace Prisma {
     connect?: SaleItemWhereUniqueInput | SaleItemWhereUniqueInput[]
   }
 
+  export type StockMovementCreateNestedManyWithoutProductInput = {
+    create?: XOR<StockMovementCreateWithoutProductInput, StockMovementUncheckedCreateWithoutProductInput> | StockMovementCreateWithoutProductInput[] | StockMovementUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: StockMovementCreateOrConnectWithoutProductInput | StockMovementCreateOrConnectWithoutProductInput[]
+    createMany?: StockMovementCreateManyProductInputEnvelope
+    connect?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
+  }
+
   export type SaleItemUncheckedCreateNestedManyWithoutProductInput = {
     create?: XOR<SaleItemCreateWithoutProductInput, SaleItemUncheckedCreateWithoutProductInput> | SaleItemCreateWithoutProductInput[] | SaleItemUncheckedCreateWithoutProductInput[]
     connectOrCreate?: SaleItemCreateOrConnectWithoutProductInput | SaleItemCreateOrConnectWithoutProductInput[]
     createMany?: SaleItemCreateManyProductInputEnvelope
     connect?: SaleItemWhereUniqueInput | SaleItemWhereUniqueInput[]
+  }
+
+  export type StockMovementUncheckedCreateNestedManyWithoutProductInput = {
+    create?: XOR<StockMovementCreateWithoutProductInput, StockMovementUncheckedCreateWithoutProductInput> | StockMovementCreateWithoutProductInput[] | StockMovementUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: StockMovementCreateOrConnectWithoutProductInput | StockMovementCreateOrConnectWithoutProductInput[]
+    createMany?: StockMovementCreateManyProductInputEnvelope
+    connect?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -7080,6 +8513,20 @@ export namespace Prisma {
     deleteMany?: SaleItemScalarWhereInput | SaleItemScalarWhereInput[]
   }
 
+  export type StockMovementUpdateManyWithoutProductNestedInput = {
+    create?: XOR<StockMovementCreateWithoutProductInput, StockMovementUncheckedCreateWithoutProductInput> | StockMovementCreateWithoutProductInput[] | StockMovementUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: StockMovementCreateOrConnectWithoutProductInput | StockMovementCreateOrConnectWithoutProductInput[]
+    upsert?: StockMovementUpsertWithWhereUniqueWithoutProductInput | StockMovementUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: StockMovementCreateManyProductInputEnvelope
+    set?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
+    disconnect?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
+    delete?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
+    connect?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
+    update?: StockMovementUpdateWithWhereUniqueWithoutProductInput | StockMovementUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: StockMovementUpdateManyWithWhereWithoutProductInput | StockMovementUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: StockMovementScalarWhereInput | StockMovementScalarWhereInput[]
+  }
+
   export type SaleItemUncheckedUpdateManyWithoutProductNestedInput = {
     create?: XOR<SaleItemCreateWithoutProductInput, SaleItemUncheckedCreateWithoutProductInput> | SaleItemCreateWithoutProductInput[] | SaleItemUncheckedCreateWithoutProductInput[]
     connectOrCreate?: SaleItemCreateOrConnectWithoutProductInput | SaleItemCreateOrConnectWithoutProductInput[]
@@ -7092,6 +8539,20 @@ export namespace Prisma {
     update?: SaleItemUpdateWithWhereUniqueWithoutProductInput | SaleItemUpdateWithWhereUniqueWithoutProductInput[]
     updateMany?: SaleItemUpdateManyWithWhereWithoutProductInput | SaleItemUpdateManyWithWhereWithoutProductInput[]
     deleteMany?: SaleItemScalarWhereInput | SaleItemScalarWhereInput[]
+  }
+
+  export type StockMovementUncheckedUpdateManyWithoutProductNestedInput = {
+    create?: XOR<StockMovementCreateWithoutProductInput, StockMovementUncheckedCreateWithoutProductInput> | StockMovementCreateWithoutProductInput[] | StockMovementUncheckedCreateWithoutProductInput[]
+    connectOrCreate?: StockMovementCreateOrConnectWithoutProductInput | StockMovementCreateOrConnectWithoutProductInput[]
+    upsert?: StockMovementUpsertWithWhereUniqueWithoutProductInput | StockMovementUpsertWithWhereUniqueWithoutProductInput[]
+    createMany?: StockMovementCreateManyProductInputEnvelope
+    set?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
+    disconnect?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
+    delete?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
+    connect?: StockMovementWhereUniqueInput | StockMovementWhereUniqueInput[]
+    update?: StockMovementUpdateWithWhereUniqueWithoutProductInput | StockMovementUpdateWithWhereUniqueWithoutProductInput[]
+    updateMany?: StockMovementUpdateManyWithWhereWithoutProductInput | StockMovementUpdateManyWithWhereWithoutProductInput[]
+    deleteMany?: StockMovementScalarWhereInput | StockMovementScalarWhereInput[]
   }
 
   export type SaleItemCreateNestedManyWithoutSaleInput = {
@@ -7208,6 +8669,20 @@ export namespace Prisma {
     upsert?: SaleUpsertWithoutReceiptInput
     connect?: SaleWhereUniqueInput
     update?: XOR<XOR<SaleUpdateToOneWithWhereWithoutReceiptInput, SaleUpdateWithoutReceiptInput>, SaleUncheckedUpdateWithoutReceiptInput>
+  }
+
+  export type ProductCreateNestedOneWithoutStockMovementsInput = {
+    create?: XOR<ProductCreateWithoutStockMovementsInput, ProductUncheckedCreateWithoutStockMovementsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutStockMovementsInput
+    connect?: ProductWhereUniqueInput
+  }
+
+  export type ProductUpdateOneRequiredWithoutStockMovementsNestedInput = {
+    create?: XOR<ProductCreateWithoutStockMovementsInput, ProductUncheckedCreateWithoutStockMovementsInput>
+    connectOrCreate?: ProductCreateOrConnectWithoutStockMovementsInput
+    upsert?: ProductUpsertWithoutStockMovementsInput
+    connect?: ProductWhereUniqueInput
+    update?: XOR<XOR<ProductUpdateToOneWithWhereWithoutStockMovementsInput, ProductUpdateWithoutStockMovementsInput>, ProductUncheckedUpdateWithoutStockMovementsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7375,6 +8850,31 @@ export namespace Prisma {
     data: SaleItemCreateManyProductInput | SaleItemCreateManyProductInput[]
   }
 
+  export type StockMovementCreateWithoutProductInput = {
+    id?: string
+    type: string
+    quantity: number
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type StockMovementUncheckedCreateWithoutProductInput = {
+    id?: string
+    type: string
+    quantity: number
+    note?: string | null
+    createdAt?: Date | string
+  }
+
+  export type StockMovementCreateOrConnectWithoutProductInput = {
+    where: StockMovementWhereUniqueInput
+    create: XOR<StockMovementCreateWithoutProductInput, StockMovementUncheckedCreateWithoutProductInput>
+  }
+
+  export type StockMovementCreateManyProductInputEnvelope = {
+    data: StockMovementCreateManyProductInput | StockMovementCreateManyProductInput[]
+  }
+
   export type SaleItemUpsertWithWhereUniqueWithoutProductInput = {
     where: SaleItemWhereUniqueInput
     update: XOR<SaleItemUpdateWithoutProductInput, SaleItemUncheckedUpdateWithoutProductInput>
@@ -7403,6 +8903,34 @@ export namespace Prisma {
     unitPrice?: IntFilter<"SaleItem"> | number
     lineTotal?: IntFilter<"SaleItem"> | number
     createdAt?: DateTimeFilter<"SaleItem"> | Date | string
+  }
+
+  export type StockMovementUpsertWithWhereUniqueWithoutProductInput = {
+    where: StockMovementWhereUniqueInput
+    update: XOR<StockMovementUpdateWithoutProductInput, StockMovementUncheckedUpdateWithoutProductInput>
+    create: XOR<StockMovementCreateWithoutProductInput, StockMovementUncheckedCreateWithoutProductInput>
+  }
+
+  export type StockMovementUpdateWithWhereUniqueWithoutProductInput = {
+    where: StockMovementWhereUniqueInput
+    data: XOR<StockMovementUpdateWithoutProductInput, StockMovementUncheckedUpdateWithoutProductInput>
+  }
+
+  export type StockMovementUpdateManyWithWhereWithoutProductInput = {
+    where: StockMovementScalarWhereInput
+    data: XOR<StockMovementUpdateManyMutationInput, StockMovementUncheckedUpdateManyWithoutProductInput>
+  }
+
+  export type StockMovementScalarWhereInput = {
+    AND?: StockMovementScalarWhereInput | StockMovementScalarWhereInput[]
+    OR?: StockMovementScalarWhereInput[]
+    NOT?: StockMovementScalarWhereInput | StockMovementScalarWhereInput[]
+    id?: StringFilter<"StockMovement"> | string
+    productId?: StringFilter<"StockMovement"> | string
+    type?: StringFilter<"StockMovement"> | string
+    quantity?: IntFilter<"StockMovement"> | number
+    note?: StringNullableFilter<"StockMovement"> | string | null
+    createdAt?: DateTimeFilter<"StockMovement"> | Date | string
   }
 
   export type SaleItemCreateWithoutSaleInput = {
@@ -7557,6 +9085,7 @@ export namespace Prisma {
     lowStockAlert: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    stockMovements?: StockMovementCreateNestedManyWithoutProductInput
   }
 
   export type ProductUncheckedCreateWithoutSaleItemsInput = {
@@ -7571,6 +9100,7 @@ export namespace Prisma {
     lowStockAlert: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    stockMovements?: StockMovementUncheckedCreateNestedManyWithoutProductInput
   }
 
   export type ProductCreateOrConnectWithoutSaleItemsInput = {
@@ -7638,6 +9168,7 @@ export namespace Prisma {
     lowStockAlert?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stockMovements?: StockMovementUpdateManyWithoutProductNestedInput
   }
 
   export type ProductUncheckedUpdateWithoutSaleItemsInput = {
@@ -7652,6 +9183,7 @@ export namespace Prisma {
     lowStockAlert?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    stockMovements?: StockMovementUncheckedUpdateManyWithoutProductNestedInput
   }
 
   export type SaleCreateWithoutReceiptInput = {
@@ -7722,6 +9254,82 @@ export namespace Prisma {
     items?: SaleItemUncheckedUpdateManyWithoutSaleNestedInput
   }
 
+  export type ProductCreateWithoutStockMovementsInput = {
+    id?: string
+    name: string
+    variant?: string | null
+    unit?: string
+    category: string
+    buyingPrice: number
+    sellingPrice: number
+    stockQuantity: number
+    lowStockAlert: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    saleItems?: SaleItemCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductUncheckedCreateWithoutStockMovementsInput = {
+    id?: string
+    name: string
+    variant?: string | null
+    unit?: string
+    category: string
+    buyingPrice: number
+    sellingPrice: number
+    stockQuantity: number
+    lowStockAlert: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    saleItems?: SaleItemUncheckedCreateNestedManyWithoutProductInput
+  }
+
+  export type ProductCreateOrConnectWithoutStockMovementsInput = {
+    where: ProductWhereUniqueInput
+    create: XOR<ProductCreateWithoutStockMovementsInput, ProductUncheckedCreateWithoutStockMovementsInput>
+  }
+
+  export type ProductUpsertWithoutStockMovementsInput = {
+    update: XOR<ProductUpdateWithoutStockMovementsInput, ProductUncheckedUpdateWithoutStockMovementsInput>
+    create: XOR<ProductCreateWithoutStockMovementsInput, ProductUncheckedCreateWithoutStockMovementsInput>
+    where?: ProductWhereInput
+  }
+
+  export type ProductUpdateToOneWithWhereWithoutStockMovementsInput = {
+    where?: ProductWhereInput
+    data: XOR<ProductUpdateWithoutStockMovementsInput, ProductUncheckedUpdateWithoutStockMovementsInput>
+  }
+
+  export type ProductUpdateWithoutStockMovementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    unit?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    buyingPrice?: IntFieldUpdateOperationsInput | number
+    sellingPrice?: IntFieldUpdateOperationsInput | number
+    stockQuantity?: IntFieldUpdateOperationsInput | number
+    lowStockAlert?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    saleItems?: SaleItemUpdateManyWithoutProductNestedInput
+  }
+
+  export type ProductUncheckedUpdateWithoutStockMovementsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    unit?: StringFieldUpdateOperationsInput | string
+    category?: StringFieldUpdateOperationsInput | string
+    buyingPrice?: IntFieldUpdateOperationsInput | number
+    sellingPrice?: IntFieldUpdateOperationsInput | number
+    stockQuantity?: IntFieldUpdateOperationsInput | number
+    lowStockAlert?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    saleItems?: SaleItemUncheckedUpdateManyWithoutProductNestedInput
+  }
+
   export type SaleItemCreateManyProductInput = {
     id?: string
     saleId: string
@@ -7729,6 +9337,14 @@ export namespace Prisma {
     quantity: number
     unitPrice: number
     lineTotal: number
+    createdAt?: Date | string
+  }
+
+  export type StockMovementCreateManyProductInput = {
+    id?: string
+    type: string
+    quantity: number
+    note?: string | null
     createdAt?: Date | string
   }
 
@@ -7759,6 +9375,30 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     lineTotal?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StockMovementUpdateWithoutProductInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StockMovementUncheckedUpdateWithoutProductInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StockMovementUncheckedUpdateManyWithoutProductInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    quantity?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

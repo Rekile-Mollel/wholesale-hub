@@ -75,20 +75,32 @@ export async function deleteProduct(formData: FormData) {
 export async function restockProduct(formData: FormData) {
   const id = String(formData.get("id") ?? "");
   const quantity = Number(formData.get("quantity") ?? 0);
+  const note = String(formData.get("note") ?? "").trim();
 
   if (!Number.isFinite(quantity) || quantity <= 0) {
     throw new Error("Restock quantity must be greater than 0.");
   }
 
-  await prisma.product.update({
-    where: {
-      id,
-    },
-    data: {
-      stockQuantity: {
-        increment: quantity,
+  await prisma.$transaction(async (tx) => {
+    await tx.product.update({
+      where: {
+        id,
       },
-    },
+      data: {
+        stockQuantity: {
+          increment: quantity,
+        },
+      },
+    });
+
+    await tx.stockMovement.create({
+      data: {
+        productId: id,
+        type: "RESTOCK",
+        quantity,
+        note: note || null,
+      },
+    });
   });
 
   revalidatePath("/products");

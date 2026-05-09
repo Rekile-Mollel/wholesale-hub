@@ -471,6 +471,16 @@ export function ProductsClient({ products }: ProductsClientProps) {
                 />
               </label>
 
+              <label className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+                Note
+                <Input
+                  name="note"
+                  type="text"
+                  placeholder="Bought from supplier, delivery batch, correction note"
+                  className="h-12 rounded-lg border-slate-200 bg-white px-4 text-sm focus-visible:border-slate-400 focus-visible:ring-4 focus-visible:ring-slate-100"
+                />
+              </label>
+
               <Button type="submit" className="h-12 w-full rounded-lg">
                 Restock Product
               </Button>
