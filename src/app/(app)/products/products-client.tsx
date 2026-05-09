@@ -37,6 +37,15 @@ type Product = {
   sellingPrice: number;
   stockQuantity: number;
   lowStockAlert: number;
+  stockMovements: StockMovement[];
+};
+
+type StockMovement = {
+  id: string;
+  type: string;
+  quantity: number;
+  note: string | null;
+  createdAt: string;
 };
 
 type ProductsClientProps = {
@@ -47,8 +56,17 @@ const moneyFormatter = new Intl.NumberFormat("en-KE", {
   maximumFractionDigits: 0,
 });
 
+const dateFormatter = new Intl.DateTimeFormat("en-KE", {
+  dateStyle: "medium",
+  timeStyle: "short",
+});
+
 function formatMoney(value: number) {
   return `KSh ${moneyFormatter.format(value)}`;
+}
+
+function formatMovementDate(value: string) {
+  return dateFormatter.format(new Date(value));
 }
 
 function ProductFormFields({ product }: { product?: Product }) {
@@ -165,6 +183,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
   const [restockingProduct, setRestockingProduct] = useState<Product | null>(
     null
   );
+  const [historyProduct, setHistoryProduct] = useState<Product | null>(null);
 
   const lowStockCount = products.filter(
     (product) => product.stockQuantity <= product.lowStockAlert
@@ -353,10 +372,10 @@ export function ProductsClient({ products }: ProductsClientProps) {
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+                          <div className="grid grid-cols-2 gap-2">
                             <Button
                               type="button"
-                              className="h-11 w-full rounded-lg text-[11px]"
+                              className="h-11 w-full rounded-lg text-xs"
                               onClick={() => setRestockingProduct(product)}
                             >
                               Restock
@@ -364,10 +383,18 @@ export function ProductsClient({ products }: ProductsClientProps) {
                             <Button
                               type="button"
                               variant="outline"
-                              className="h-11 w-full rounded-lg text-[11px]"
+                              className="h-11 w-full rounded-lg text-xs"
                               onClick={() => setEditingProduct(product)}
                             >
                               Edit
+                            </Button>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              className="h-11 w-full rounded-lg text-xs"
+                              onClick={() => setHistoryProduct(product)}
+                            >
+                              History
                             </Button>
                             <form action={deleteProduct}>
                               <input
@@ -378,7 +405,7 @@ export function ProductsClient({ products }: ProductsClientProps) {
                               <Button
                                 type="submit"
                                 variant="destructive"
-                                className="h-11 w-full rounded-lg text-[11px]"
+                                className="h-11 w-full rounded-lg text-xs"
                               >
                                 Delete
                               </Button>
@@ -485,6 +512,109 @@ export function ProductsClient({ products }: ProductsClientProps) {
                 Restock Product
               </Button>
             </form>
+          ) : null}
+        </SheetContent>
+      </Sheet>
+
+      <Sheet
+        open={historyProduct !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setHistoryProduct(null);
+          }
+        }}
+      >
+        <SheetContent
+          side="right"
+          className="w-full overflow-y-auto bg-white p-0 sm:max-w-md"
+        >
+          <SheetHeader className="border-b border-slate-200 p-5 sm:p-6">
+            <SheetTitle className="text-left text-lg text-slate-950">
+              Stock History
+            </SheetTitle>
+            <SheetDescription className="text-left text-slate-500">
+              Inventory changes recorded for this product.
+            </SheetDescription>
+          </SheetHeader>
+
+          {historyProduct ? (
+            <div className="flex flex-col gap-5 p-5 sm:p-6">
+              <div className="rounded-lg bg-slate-50 p-4">
+                <p className="text-sm font-semibold text-slate-950">
+                  {historyProduct.name}
+                </p>
+                {historyProduct.variant ? (
+                  <p className="mt-1 text-sm font-medium text-slate-700">
+                    {historyProduct.variant}
+                  </p>
+                ) : null}
+                <div className="mt-3 flex items-center justify-between gap-4 text-sm">
+                  <span className="text-slate-500">Current stock</span>
+                  <span className="font-semibold text-slate-900">
+                    {historyProduct.stockQuantity} {historyProduct.unit}
+                  </span>
+                </div>
+              </div>
+
+              {historyProduct.stockMovements.length === 0 ? (
+                <div className="rounded-lg border border-dashed border-slate-200 p-5 text-center">
+                  <p className="text-sm font-semibold text-slate-900">
+                    No stock history yet.
+                  </p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Restocks and sales will appear here.
+                  </p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-3">
+                  {historyProduct.stockMovements.map((movement) => {
+                    const isRestock = movement.type === "RESTOCK";
+                    const quantityLabel =
+                      movement.quantity > 0
+                        ? `+${movement.quantity}`
+                        : String(movement.quantity);
+
+                    return (
+                      <div
+                        key={movement.id}
+                        className="rounded-lg border border-slate-200 p-4"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div>
+                            <Badge
+                              className={
+                                isRestock
+                                  ? "rounded-full bg-emerald-100 px-2.5 py-1 text-emerald-700"
+                                  : "rounded-full bg-rose-100 px-2.5 py-1 text-rose-700"
+                              }
+                            >
+                              {movement.type}
+                            </Badge>
+                            <p className="mt-2 text-xs text-slate-500">
+                              {formatMovementDate(movement.createdAt)}
+                            </p>
+                          </div>
+                          <span
+                            className={
+                              isRestock
+                                ? "text-sm font-bold text-emerald-700"
+                                : "text-sm font-bold text-rose-700"
+                            }
+                          >
+                            {quantityLabel}
+                          </span>
+                        </div>
+                        {movement.note ? (
+                          <p className="mt-3 text-sm text-slate-600">
+                            {movement.note}
+                          </p>
+                        ) : null}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           ) : null}
         </SheetContent>
       </Sheet>
